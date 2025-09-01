@@ -1,0 +1,11 @@
+In the RubyMine termial. perform the following commands:
+
+git clone https://github.com/mithbe/BIOT_670I_Ruby.git
+cd BIOT_670I_Ruby
+git checkout rails_app
+bundle install
+rails db:migrate
+rails server
+
+
+This ensures each member can use the latest version on the rails_app branch and can run the app locally.
