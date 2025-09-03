@@ -1,5 +1,7 @@
 class SamplesController < ApplicationController
   def index
+    @samples = Sample.all
+    end
   end
 
   def show
@@ -10,4 +12,4 @@ class SamplesController < ApplicationController
 
   def edit
   end
-end
+

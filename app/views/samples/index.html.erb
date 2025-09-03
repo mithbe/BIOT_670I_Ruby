@@ -1,2 +1,9 @@
-<h1>Samples#index</h1>
-<p>Find me in app/views/samples/index.html.erb</p>
+<h1>All Samples</h1>
+
+<ul>
+  <% @samples.each do |sample| %>
+    <li>
+      <strong><%= sample.name %></strong> - <%= sample.description %>
+    </li>
+  <% end %>
+</ul>
