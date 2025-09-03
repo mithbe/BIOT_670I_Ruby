@@ -23,6 +23,20 @@
   </head>
 
   <body>
+    <!-- The notice and alert messages are correctly placed here -->
+    <p class="notice"><%= notice %></p>
+    <p class="alert"><%= alert %></p>
+
+    <!-- The user authentication links are correctly placed here -->
+    <% if user_signed_in? %>
+      <p>Hello, <%= current_user.email %>!</p>
+      <%= link_to "Log Out", destroy_user_session_path, data: { turbo_method: :delete } %>
+    <% else %>
+      <%= link_to "Sign Up", new_user_registration_path %>
+      <%= link_to "Sign In", new_user_session_path %>
+    <% end %>
+
+    <!-- This is the crucial tag that renders the content from your views -->
     <%= yield %>
   </body>
 </html>
