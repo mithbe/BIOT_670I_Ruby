@@ -76,6 +76,7 @@ GEM
       public_suffix (>= 2.0.2, < 7.0)
     ast (2.4.3)
     base64 (0.3.0)
+    bcrypt (3.1.20)
     bcrypt_pbkdf (1.1.1)
     bcrypt_pbkdf (1.1.1-x64-mingw-ucrt)
     benchmark (0.4.1)
@@ -102,6 +103,12 @@ GEM
     debug (1.11.0)
       irb (~> 1.10)
       reline (>= 0.3.8)
+    devise (4.9.4)
+      bcrypt (~> 3.0)
+      orm_adapter (~> 0.1)
+      railties (>= 4.1.0)
+      responders
+      warden (~> 1.2.3)
     dotenv (3.1.8)
     drb (2.2.3)
     ed25519 (1.4.0)
@@ -171,15 +178,19 @@ GEM
       net-protocol
     net-ssh (7.3.0)
     nio4r (2.7.4)
+    nokogiri (1.18.9-arm64-darwin)
+      racc (~> 1.4)
     nokogiri (1.18.9-x64-mingw-ucrt)
       racc (~> 1.4)
     nokogiri (1.18.9-x86_64-linux-gnu)
       racc (~> 1.4)
+    orm_adapter (0.5.0)
     ostruct (0.6.3)
     parallel (1.27.0)
     parser (3.3.9.0)
       ast (~> 2.4.1)
       racc
+    pg (1.6.1-arm64-darwin)
     pg (1.6.1-x64-mingw-ucrt)
     pg (1.6.1-x86_64-linux)
     pp (0.6.2)
@@ -243,6 +254,9 @@ GEM
     regexp_parser (2.11.2)
     reline (0.6.2)
       io-console (~> 0.5)
+    responders (3.1.1)
+      actionpack (>= 5.2)
+      railties (>= 5.2)
     rexml (3.4.2)
     rubocop (1.80.1)
       json (~> 2.3)
@@ -309,6 +323,7 @@ GEM
     stringio (3.1.7)
     thor (1.4.0)
     thruster (0.1.15)
+    thruster (0.1.15-arm64-darwin)
     thruster (0.1.15-x86_64-linux)
     timeout (0.4.3)
     turbo-rails (2.0.16)
@@ -323,6 +338,8 @@ GEM
     unicode-emoji (4.0.4)
     uri (1.0.3)
     useragent (0.16.11)
+    warden (1.2.9)
+      rack (>= 2.0.9)
     web-console (4.2.1)
       actionview (>= 6.0.0)
       activemodel (>= 6.0.0)
@@ -338,6 +355,7 @@ GEM
     zeitwerk (2.7.3)
 
 PLATFORMS
+  arm64-darwin-23
   x64-mingw-ucrt
   x86_64-linux
 
@@ -346,6 +364,7 @@ DEPENDENCIES
   brakeman
   capybara
   debug
+  devise
   importmap-rails
   jbuilder
   kamal
