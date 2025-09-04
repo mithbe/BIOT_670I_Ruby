@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"  ?>
+<!DOCTYPE GBSet PUBLIC "-//NCBI//NCBI GBSeq/EN" "https://www.ncbi.nlm.nih.gov/dtd/NCBI_GBSeq.dtd">
+<GBSet>
+  <GBSeq>
+
+    <GBSeq_locus>DY843494</GBSeq_locus>
+    <GBSeq_length>555</GBSeq_length>
+    <GBSeq_strandedness>single</GBSeq_strandedness>
+    <GBSeq_moltype>mRNA</GBSeq_moltype>
+    <GBSeq_topology>linear</GBSeq_topology>
+    <GBSeq_division>EST</GBSeq_division>
+    <GBSeq_update-date>04-OCT-2006</GBSeq_update-date>
+    <GBSeq_create-date>23-MAR-2006</GBSeq_create-date>
+    <GBSeq_definition>CTOZ9999.b1_M03.ab1 CTO(XYZ) dandelion Taraxacum officinale cDNA clone CTOZ9999, mRNA sequence</GBSeq_definition>
+    <GBSeq_primary-accession>DY843494</GBSeq_primary-accession>
+    <GBSeq_accession-version>DY843494.1</GBSeq_accession-version>
+    <GBSeq_other-seqids>
+      <GBSeqid>gnl|dbEST|37648571</GBSeqid>
+      <GBSeqid>gb|DY843494.1|</GBSeqid>
+      <GBSeqid>gi|90345856</GBSeqid>
+    </GBSeq_other-seqids>
+    <GBSeq_keywords>
+      <GBKeyword>EST</GBKeyword>
+    </GBSeq_keywords>
+    <GBSeq_source>Taraxacum officinale</GBSeq_source>
+    <GBSeq_organism>Taraxacum officinale</GBSeq_organism>
+    <GBSeq_taxonomy>Eukaryota; Viridiplantae; Streptophyta; Embryophyta; Tracheophyta; Spermatophyta; Magnoliopsida; eudicotyledons; Gunneridae; Pentapetalae; asterids; campanulids; Asterales; Asteraceae; Cichorioideae; Cichorieae; Crepidinae; Taraxacum</GBSeq_taxonomy>
+    <GBSeq_references>
+      <GBReference>
+        <GBReference_reference>1</GBReference_reference>
+        <GBReference_position>1..555</GBReference_position>
+        <GBReference_authors>
+          <GBAuthor>Michelmore,R.W.</GBAuthor>
+          <GBAuthor>Knapp,S.</GBAuthor>
+          <GBAuthor>Rieseberg,L.</GBAuthor>
+          <GBAuthor>Bradford,K.</GBAuthor>
+          <GBAuthor>Kesseli,R.</GBAuthor>
+          <GBAuthor>Boore,J.</GBAuthor>
+          <GBAuthor>Kozik,A.</GBAuthor>
+          <GBAuthor>Matvienko,M.</GBAuthor>
+          <GBAuthor>Lavelle,D.</GBAuthor>
+          <GBAuthor>van Dijk,P.</GBAuthor>
+        </GBReference_authors>
+        <GBReference_title>Dandelion ESTs from the Compositae Genome Project http://compgenomics.ucdavis.edu/</GBReference_title>
+        <GBReference_journal>Unpublished</GBReference_journal>
+      </GBReference>
+    </GBSeq_references>
+    <GBSeq_comment>Contact: Alexander Kozik [R.W.Michelmore]~R.W.Michelmore Lab, Genome Center~University of California at Davis (UCD)~451 East Health Sciences Drive, UCD, Davis, CA 95616, USA~Tel: 1-(530)-754-9648~Fax: 1-(530)-754-9658~Email: akozik@atgc.org [rwmichelmore@ucdavis.edu]~Library was sequenced at Joint Genome Institute, Walnut Creek CA, using ABI 3730 machines. Clone CTOZ9999 can be order at Arizona Genomic Institute (AGI): http://genome.arizona.edu/orders/ from Library TO__Ec by GenBank accession number DY843494.</GBSeq_comment>
+    <GBSeq_feature-table>
+      <GBFeature>
+        <GBFeature_key>source</GBFeature_key>
+        <GBFeature_location>1..555</GBFeature_location>
+        <GBFeature_intervals>
+          <GBInterval>
+            <GBInterval_from>1</GBInterval_from>
+            <GBInterval_to>555</GBInterval_to>
+            <GBInterval_accession>DY843494.1</GBInterval_accession>
+          </GBInterval>
+        </GBFeature_intervals>
+        <GBFeature_quals>
+          <GBQualifier>
+            <GBQualifier_name>organism</GBQualifier_name>
+            <GBQualifier_value>Taraxacum officinale</GBQualifier_value>
+          </GBQualifier>
+          <GBQualifier>
+            <GBQualifier_name>mol_type</GBQualifier_name>
+            <GBQualifier_value>mRNA</GBQualifier_value>
+          </GBQualifier>
+          <GBQualifier>
+            <GBQualifier_name>db_xref</GBQualifier_name>
+            <GBQualifier_value>taxon:50225</GBQualifier_value>
+          </GBQualifier>
+          <GBQualifier>
+            <GBQualifier_name>clone</GBQualifier_name>
+            <GBQualifier_value>CTOZ9999</GBQualifier_value>
+          </GBQualifier>
+          <GBQualifier>
+            <GBQualifier_name>clone_lib</GBQualifier_name>
+            <GBQualifier_value>SAMN00149970 CTO(XYZ) dandelion</GBQualifier_value>
+          </GBQualifier>
+          <GBQualifier>
+            <GBQualifier_name>lab_host</GBQualifier_name>
+            <GBQualifier_value>E.coli</GBQualifier_value>
+          </GBQualifier>
+          <GBQualifier>
+            <GBQualifier_name>note</GBQualifier_name>
+            <GBQualifier_value>Vector: pBRcDNASfiAB; The standard library was constructed from multiple sources of RNA from a single genotype. cDNAs were then size-fractionated, directionally cloned into a custom medium-copy vector and transformations made with three size classes (X-large,Y-medium and Z-small) to minimize size bias due to differential transformation efficiency. Details of each source of RNA and library construction can be obtained at http://cgpdb.ucdavis.edu/</GBQualifier_value>
+          </GBQualifier>
+        </GBFeature_quals>
+      </GBFeature>
+    </GBSeq_feature-table>
+    <GBSeq_sequence>cggggacacaaaataaagaaatatatttcatcaaggttacatactaaaattaccaaaaaaaatggtttctaataggtctcatatagttggtctagttgtgattatagctatgctcatggtgatgctatgtgatggaaccacacttgagtcgtcggagtgtagaagtgcattagtgagcttgagcccgtgtcttaactatgtgagcggtaattcatcgactccatcacacccttgttgttcgcagctcgccaatgttgtgagatcagagccacgatgtctttgtgttttggttgatggaggtaactcagctacaagtttgaacattaatgaaaccttggctttgggactacccgacgtgtgtaatgtccacacacctccggttagccgttgtgatggaaatgggactcaatctgtgccagcaacatctggtggaactacgatcagtctgtcattctatttcaattttgttcttcttttgctagcttcaaatttatatggttgattattgtgaaagttaatctttggaataataatatccatcactttcaattttag</GBSeq_sequence>
+    <GBSeq_xrefs>
+      <GBXref>
+        <GBXref_dbname>BioSample</GBXref_dbname>
+        <GBXref_id>SAMN00149970</GBXref_id>
+      </GBXref>
+    </GBSeq_xrefs>
+  </GBSeq>
+
+</GBSet>
