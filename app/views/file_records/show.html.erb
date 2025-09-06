@@ -1,0 +1,7 @@
+<h1><%= @file_record.name %></h1>
+<p><%= @file_record.description %></p>
+<p>Type: <%= @file_record.file_type %></p>
+<p>Size: <%= @file_record.size %></p>
+
+<%= link_to "Edit", edit_file_record_path(@file_record) %> |
+<%= link_to "Back", file_records_path %>

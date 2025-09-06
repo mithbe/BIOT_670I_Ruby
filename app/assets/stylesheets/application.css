@@ -8,3 +8,84 @@
  *
  * Consider organizing styles into separate files for maintainability.
  */
+/* Overall Page Styles */
+body {
+    background-color: #f4f4f9; /* light background for theme */
+    font-family: "Helvetica Neue", Arial, sans-serif;
+    color: #333;
+    margin: 0;
+    padding: 0;
+}
+
+/* Hero Section */
+.hero {
+    background-color: #f8f9fa; /* light gray hero */
+    text-align: center;
+    padding: 60px 20px;
+    border-bottom: 1px solid #ddd;
+}
+
+.hero h1 {
+    font-size: 3rem;
+    margin-bottom: 10px;
+}
+
+.hero p {
+    font-size: 1.2rem;
+    color: #555;
+}
+
+/* Navigation Buttons */
+.home-navigation {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 15px;
+    margin-top: 40px;
+}
+
+/* Button Styles */
+.btn {
+    display: inline-block;
+    padding: 12px 20px;
+    text-decoration: none;
+    color: white;
+    background-color: #007bff; /* primary button color */
+    border-radius: 5px;
+    text-align: center;
+    transition: all 0.2s ease;
+}
+
+.btn-secondary {
+    background-color: #6c757d; /* secondary button color */
+}
+
+/* Button hover effect */
+.btn:hover {
+    opacity: 0.9;
+    transform: scale(1.05);
+}
+/* Top Navigation Bar */
+.top-nav {
+    width: 100%;
+    background-color: #007bff; /* match primary theme */
+    padding: 10px 20px;
+    box-sizing: border-box;
+}
+
+.nav-right {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+}
+
+.nav-link {
+    color: white;
+    text-decoration: none;
+    margin-left: 15px;
+    font-weight: bold;
+}
+
+.nav-link:hover {
+    text-decoration: underline;
+}
