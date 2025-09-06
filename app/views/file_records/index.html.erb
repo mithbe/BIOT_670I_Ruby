@@ -1,0 +1,12 @@
+<h1>All Files</h1>
+<%= link_to "Upload New File", new_file_record_path %>
+
+<ul>
+  <% @file_records.each do |file| %>
+    <li>
+      <%= link_to file.name, file_record_path(file) %> |
+      <%= link_to "Edit", edit_file_record_path(file) %> |
+      <%= link_to "Delete", file_record_path(file), method: :delete, data: { confirm: "Are you sure?" } %>
+    </li>
+  <% end %>
+</ul>
