@@ -1,6 +1,4 @@
-=begin
 !/usr/bin/env ruby
-=end
 
 require "rubygems"
 require "bundler/setup"
