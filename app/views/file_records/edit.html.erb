@@ -1,0 +1,19 @@
+<h1>Edit File</h1>
+
+<%= form_with(model: @file_record, local: true) do |f| %>
+  <div>
+    <%= f.label :name %>
+    <%= f.text_field :name %>
+  </div>
+
+  <div>
+    <%= f.label :description %>
+    <%= f.text_area :description %>
+  </div>
+
+  <div>
+    <%= f.submit "Save Changes" %>
+  </div>
+<% end %>
+
+<%= link_to "Back", file_records_path %>
