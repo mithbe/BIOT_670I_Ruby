@@ -2,8 +2,10 @@
 
 <% 1.upto(10) do |i| %>
 user_<%= i %>:
-  name: "User <%= i %>"
+  first_name: "User<%= i %>"
+  last_name: "Example"
   email: "user<%= i %>@example.com"
   encrypted_password: <%= Devise::Encryptor.digest(User, "password#{i}") %>
 <% end %>
+
 
