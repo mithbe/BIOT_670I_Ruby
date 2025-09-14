@@ -18,14 +18,16 @@ default: &default
   # For details on connection pooling, see Rails configuration guide
   # https://guides.rubyonrails.org/configuring.html#database-pooling
   pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
-
+  username: postgres
+  password: Cardinals22!
+  host: 127.0.0.1
 
 
 development:
   <<: *default
   database: dandelion_warehouse_development
   username: postgres
-  password: Alpha1one!
+  password: Cardinals22!
   host: localhost
 
   # The specified database role being used to connect to PostgreSQL.
@@ -62,7 +64,7 @@ test:
   <<: *default
   database: dandelion_warehouse_test
   username: postgres
-  password: Alpha1one!
+  password: Cardinals22!
   host: localhost
 
 # As with config/credentials.yml, you never want to store sensitive information,

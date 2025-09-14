@@ -10,7 +10,8 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_09_03_030448) do
+ActiveRecord::Schema[8.0].define(version: 2025_09_14_145224) do
+  # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
   create_table "active_storage_attachments", force: :cascade do |t|
@@ -41,6 +42,21 @@ ActiveRecord::Schema[8.0].define(version: 2025_09_03_030448) do
     t.index ["blob_id", "variation_digest"], name: "index_active_storage_variant_records_uniqueness", unique: true
   end
 
+  create_table "dandelions", force: :cascade do |t|
+    t.string "species"
+    t.string "location"
+    t.datetime "collected_at"
+    t.bigint "user_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_dandelions_on_user_id"
+  end
+
+  create_table "dandelions_userinfos", id: false, force: :cascade do |t|
+    t.bigint "userinfo_id", null: false
+    t.bigint "dandelion_id", null: false
+  end
+
   create_table "file_records", force: :cascade do |t|
     t.string "name"
     t.string "original_name"
@@ -57,12 +73,46 @@ ActiveRecord::Schema[8.0].define(version: 2025_09_03_030448) do
     t.index ["user_id"], name: "index_file_records_on_user_id"
   end
 
+  create_table "file_uploads", force: :cascade do |t|
+    t.string "filename"
+    t.string "filetype"
+    t.bigint "user_id", null: false
+    t.bigint "dandelion_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["dandelion_id"], name: "index_file_uploads_on_dandelion_id"
+    t.index ["user_id"], name: "index_file_uploads_on_user_id"
+  end
+
+  create_table "metadata", force: :cascade do |t|
+    t.string "key"
+    t.string "value"
+    t.bigint "file_upload_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["file_upload_id"], name: "index_metadata_on_file_upload_id"
+  end
+
   create_table "samples", force: :cascade do |t|
     t.string "name"
     t.text "description"
     t.string "image"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "userinfos", force: :cascade do |t|
+    t.string "name"
+    t.string "email"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.string "first_name"
+    t.string "last_name"
+    t.string "address"
+    t.string "city"
+    t.string "state"
+    t.string "zip_code"
+    t.index ["email"], name: "index_userinfos_on_email", unique: true
   end
 
   create_table "users", force: :cascade do |t|
@@ -79,5 +129,9 @@ ActiveRecord::Schema[8.0].define(version: 2025_09_03_030448) do
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
+  add_foreign_key "dandelions", "users"
   add_foreign_key "file_records", "users"
+  add_foreign_key "file_uploads", "dandelions"
+  add_foreign_key "file_uploads", "users"
+  add_foreign_key "metadata", "file_uploads"
 end

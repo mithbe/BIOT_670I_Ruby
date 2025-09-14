@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/dandelion_warehouse.iml" filepath="$PROJECT_DIR$/.idea/dandelion_warehouse.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/BIOT_670I_Ruby.iml" filepath="$PROJECT_DIR$/.idea/BIOT_670I_Ruby.iml" />
     </modules>
   </component>
 </project>
