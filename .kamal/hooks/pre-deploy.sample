@@ -26,7 +26,6 @@ require "bundler/inline"
 # true = install gems so this is fast on repeat invocations
 gemfile(true, quiet: true) do
   source "https://rubygems.org"
-
   gem "octokit"
   gem "faraday-retry"
 end
@@ -63,7 +62,7 @@ class GithubStatusChecks
   end
 
   def complete_count
-    combined_status[:statuses].count { |status| status[:state] != "pending"}
+    combined_status[:statuses].count { |status| status[:state] != "pending" }
   end
 
   def total_count
@@ -79,18 +78,18 @@ class GithubStatusChecks
   end
 
   private
-    def github_repo_from_remote_url
-      url = `git config --get remote.origin.url`.strip.delete_suffix(".git")
-      if url.start_with?("https://github.com/")
-        url.delete_prefix("https://github.com/")
-      elsif url.start_with?("git@github.com:")
-        url.delete_prefix("git@github.com:")
-      else
-        url
-      end
-    end
-end
 
+  def github_repo_from_remote_url
+    url = `git config --get remote.origin.url`.strip.delete_suffix(".git")
+    if url.start_with?("https://github.com/")
+      url.delete_prefix("https://github.com/")
+    elsif url.start_with?("git@github.com:")
+      url.delete_prefix("git@github.com:")
+    else
+      url
+    end
+  end
+end
 
 $stdout.sync = true
 
@@ -111,7 +110,9 @@ begin
       attempts += 1
     end
 
-    exit_with_error "Checks are still pending, gave up after #{MAX_ATTEMPTS * ATTEMPTS_GAP} seconds" if attempts == MAX_ATTEMPTS
+    if attempts == MAX_ATTEMPTS
+      exit_with_error "Checks are still pending, gave up after #{MAX_ATTEMPTS * ATTEMPTS_GAP} seconds"
+    end
 
     puts checks.current_status
     sleep(ATTEMPTS_GAP)

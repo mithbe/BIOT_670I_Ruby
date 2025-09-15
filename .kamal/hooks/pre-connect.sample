@@ -13,7 +13,10 @@
 # KAMAL_DESTINATION (if set)
 # KAMAL_RUNTIME
 
-hosts = ENV["KAMAL_HOSTS"].split(",")
+require "socket"
+require "benchmark"
+
+hosts = (ENV["KAMAL_HOSTS"] || "").split(",").reject(&:empty?)
 results = nil
 max = 3
 

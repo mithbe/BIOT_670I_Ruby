@@ -1,2 +1,4 @@
-#!/usr/bin/env ruby.exe
+=begin
+!/usr/bin/env ruby.exe
+=end
 exec "./bin/rails", "server", *ARGV
