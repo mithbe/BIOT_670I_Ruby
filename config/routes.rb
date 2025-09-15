@@ -4,9 +4,6 @@ Rails.application.routes.draw do
   # Account management
   resource :account, only: [:show, :edit, :update]
 
-  # Samples management
-  resources :samples, only: [:index, :show, :new, :create, :edit, :update, :destroy]
-
   # File uploads / search
   resources :file_records, only: [:index, :new, :create, :show]
 
