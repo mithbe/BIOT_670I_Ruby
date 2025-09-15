@@ -4,8 +4,20 @@
 # model remove the "{}" from the fixture names and add the columns immediately
 # below each fixture, per the syntax in the comments below
 #
-one: {}
-# column: value
-#
-two: {}
-# column: value
+one_file:
+  name: MyFile
+  original_name: my_file.txt
+  file_type: text
+  mime_type: text/plain
+  size: 1234
+  user: one_user
+
+two_file:
+  name: AnotherFile
+  original_name: another_file.txt
+  file_type: text
+  mime_type: text/plain
+  size: 5678
+  user: two_user
+
+

@@ -1,11 +1,14 @@
 # Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
-<% 1.upto(10) do |i| %>
-user_<%= i %>:
-  first_name: "User<%= i %>"
-  last_name: "Example"
-  email: "user<%= i %>@example.com"
-  encrypted_password: <%= Devise::Encryptor.digest(User, "password#{i}") %>
-<% end %>
+one_user:
+  email: one@example.com
+  encrypted_password: <%= Devise::Encryptor.digest(User, 'password') %>
+
+two_user:
+  email: two@example.com
+  encrypted_password: <%= Devise::Encryptor.digest(User, 'password') %>
+
+
+
 
 
