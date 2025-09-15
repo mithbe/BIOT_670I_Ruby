@@ -1,0 +1,21 @@
+<!-- Site Map -->
+
+<!-- Flash Messages Demo -->
+<div class="flash-messages">
+  <%# Demo alert %>
+  <div class="alert">This is where alerts go!</div>
+
+  <%# Demo notice/update %>
+  <div class="notice">This is where updates go!</div>
+</div>
+
+<footer class="site-map">
+  <h3>Site Map</h3>
+  <ul>
+    <li><%= link_to "Home", root_path %></li>
+    <li><%= link_to "Account Details", account_path %></li>
+    <li><%= link_to "Edit Account", edit_account_path %></li>
+    <li><%= link_to "File Records", file_records_path %></li>
+    <li><%= link_to "Upload New File", new_file_record_path %></li>
+  </ul>
+</footer>

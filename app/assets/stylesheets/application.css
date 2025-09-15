@@ -1,91 +1,110 @@
-/*
- * This is a manifest file that'll be compiled into application.css.
- *
- * With Propshaft, assets are served efficiently without preprocessing steps. You can still include
- * application-wide styles in this file, but keep in mind that CSS precedence will follow the standard
- * cascading order, meaning styles declared later in the document or manifest will override earlier ones,
- * depending on specificity.
- *
- * Consider organizing styles into separate files for maintainability.
- */
-/* Overall Page Styles */
-body {
-    background-color: #f4f4f9; /* light background for theme */
-    font-family: "Helvetica Neue", Arial, sans-serif;
-    color: #333;
-    margin: 0;
-    padding: 0;
+.top-banner {
+    background-color: lightcoral;
+    color: cornsilk;
+    padding: 20px 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
 }
 
-/* Hero Section */
-.hero {
-    background-color: #f8f9fa; /* light gray hero */
+/* Logo left */
+.logo-left {
+    position: absolute;
+    left: 40px;
+    top: 20px;
+}
+
+.banner-logo {
+    height: 60px;
+    width: auto;
+    border-radius: 8px; /* soften corners */
+        background-color: lightcoral; /* matches banner */
+        mix-blend-mode: multiply;     /* blends edges */
+    }
+}
+
+/* Centered site name + slogan */
+.banner-content {
     text-align: center;
-    padding: 60px 20px;
-    border-bottom: 1px solid #ddd;
 }
 
-.hero h1 {
-    font-size: 3rem;
+.flash-messages .notice {
+    background-color: #d4edda;
+    color: #155724;
+    padding: 12px 20px;
+    border-radius: 6px;
     margin-bottom: 10px;
 }
 
-.hero p {
-    font-size: 1.2rem;
-    color: #555;
-}
-
-/* Navigation Buttons */
-.home-navigation {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 15px;
-    margin-top: 40px;
-}
-
-/* Button Styles */
-.btn {
-    display: inline-block;
+.flash-messages .alert {
+    background-color: #f8d7da;
+    color: #721c24;
     padding: 12px 20px;
-    text-decoration: none;
-    color: white;
-    background-color: #007bff; /* primary button color */
-    border-radius: 5px;
-    text-align: center;
-    transition: all 0.2s ease;
+    border-radius: 6px;
+    margin-bottom: 10px;
 }
-
-.btn-secondary {
-    background-color: #6c757d; /* secondary button color */
-}
-
-/* Button hover effect */
-.btn:hover {
-    opacity: 0.9;
-    transform: scale(1.05);
-}
-/* Top Navigation Bar */
-.top-nav {
-    width: 100%;
-    background-color: #007bff; /* match primary theme */
-    padding: 10px 20px;
-    box-sizing: border-box;
-}
-
-.nav-right {
-    display: flex;
-    justify-content: flex-end;
-    align-items: center;
-}
-
-.nav-link {
-    color: white;
-    text-decoration: none;
-    margin-left: 15px;
+.site-name {
+    font-size: 2.5rem;
     font-weight: bold;
+    margin: 0;
 }
 
-.nav-link:hover {
-    text-decoration: underline;
+.slogan {
+    font-size: 1.2rem;
+    margin-top: 5px;
+}
+
+/* Top-right user actions (as before) */
+.user-actions {
+    position: absolute;
+    top: 20px;
+    right: 40px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+.dashboard-buttons {
+    display: flex;
+    justify-content: center; /* center horizontally */
+    flex-wrap: wrap;         /* wrap if too many buttons */
+    gap: 15px;               /* space between buttons */
+    margin: 20px auto 40px;  /* space below banner */
+}
+
+.site-map {
+    background-color: #fff8dc; /* same creamy white as body */
+    color: #333;
+    text-align: center;
+    padding: 30px 20px;
+    border-top: 2px solid lightcoral;
+    margin-top: 50px;
+}
+
+.site-map h3 {
+    font-size: 1.5rem;
+    margin-bottom: 15px;
+    color: lightcoral;
+}
+
+.site-map ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.site-map ul li {
+    display: inline-block;
+    margin: 0 10px;
+}
+
+.site-map ul li a {
+    text-decoration: none;
+    color: lightcoral;
+    font-weight: bold;
+    transition: color 0.2s;
+}
+
+.site-map ul li a:hover {
+    color: #e06b66; /* slightly darker coral on hover */
 }

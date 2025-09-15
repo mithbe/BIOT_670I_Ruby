@@ -1,42 +1,42 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <title><%= content_for(:title) || "Dandelion Warehouse" %></title>
-    <meta name="viewport" content="width=device-width,initial-scale=1">
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="mobile-web-app-capable" content="yes">
-    <%= csrf_meta_tags %>
-    <%= csp_meta_tag %>
+<head>
+  <title>Rubra</title>
+  <%= csrf_meta_tags %>
+  <%= csp_meta_tag %>
 
-    <%= yield :head %>
+  <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
+  <%= javascript_importmap_tags %>
+</head>
 
-    <%# Enable PWA manifest for installable apps (make sure to enable in config/routes.rb too!) %>
-    <%#= tag.link rel: "manifest", href: pwa_manifest_path(format: :json) %>
+<body>
+<!-- Top Banner -->
+<header class="top-banner">
+  <div class="logo-left">
+    <%= image_tag "rubra_symbol.jpg", alt: "Rubra Logo", class: "banner-logo" %>
+  </div>
 
-    <link rel="icon" href="/icon.png" type="image/png">
-    <link rel="icon" href="/icon.svg" type="image/svg+xml">
-    <link rel="apple-touch-icon" href="/icon.png">
+  <div class="banner-content">
+    <h1 class="site-name">Rubra</h1>
+    <p class="slogan">The tether between scattered dandelions and rubber research</p>
+  </div>
 
-    <%# Includes all stylesheet files in app/assets/stylesheets %>
-    <%= stylesheet_link_tag :app, "data-turbo-track": "reload" %>
-    <%= javascript_importmap_tags %>
-  </head>
-
-  <body>
-    <!-- The notice and alert messages are correctly placed here -->
-    <p class="notice"><%= notice %></p>
-    <p class="alert"><%= alert %></p>
-
-    <!-- The user authentication links are correctly placed here -->
+  <div class="user-actions">
     <% if user_signed_in? %>
-      <p>Hello, <%= current_user.email %>!</p>
-      <%= link_to "Log Out", destroy_user_session_path, data: { turbo_method: :delete } %>
+      <span class="greeting">Hello, <%= current_user.email %>!</span>
+      <%= link_to "Log Out", destroy_user_session_path, data: { turbo_method: :delete }, class: "btn small-btn" %>
     <% else %>
-      <%= link_to "Sign Up", new_user_registration_path %>
-      <%= link_to "Sign In", new_user_session_path %>
+      <%= link_to "Sign Up", new_user_registration_path, class: "btn small-btn" %>
+      <%= link_to "Sign In", new_user_session_path, class: "btn small-btn" %>
     <% end %>
+  </div>
+</header>
 
-    <!-- This is the crucial tag that renders the content from your views -->
-    <%= yield %>
-  </body>
+<!-- Flash messages -->
+<p class="notice"><%= notice %></p>
+<p class="alert"><%= alert %></p>
+
+<!-- Main content -->
+<%= yield %>
+</body>
 </html>
