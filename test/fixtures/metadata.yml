@@ -1,11 +1,12 @@
 # Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
-one:
+metadata_one:
   key: MyString
   value: MyString
-  file_upload: one
+  file_upload_id: <%= ActiveRecord::FixtureSet.identify(:file_upload_one) %>
 
-two:
+metadata_two:
   key: MyString
   value: MyString
-  file_upload: two
+  file_upload_id: <%= ActiveRecord::FixtureSet.identify(:file_upload_two) %>
+

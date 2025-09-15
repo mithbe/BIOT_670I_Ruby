@@ -1,13 +1,14 @@
 # Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
-one:
+file_upload_one:
   filename: MyString
   filetype: MyString
-  user: one
-  dandelion: one
+  user_id: <%= ActiveRecord::FixtureSet.identify(:one_user) %>
+  dandelion_id: <%= ActiveRecord::FixtureSet.identify(:dandelion_one) %>
 
-two:
+file_upload_two:
   filename: MyString
   filetype: MyString
-  user: two
-  dandelion: two
+  user_id: <%= ActiveRecord::FixtureSet.identify(:two_user) %>
+  dandelion_id: <%= ActiveRecord::FixtureSet.identify(:dandelion_two) %>
+

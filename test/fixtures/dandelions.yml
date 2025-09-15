@@ -1,11 +1,11 @@
-one:
+dandelion_one:
   species: MyString
   location: MyString
   collected_at: 2025-09-14 08:49:50
-  user: one
+  user_id: <%= ActiveRecord::FixtureSet.identify(:one_user) %>
 
-two:
+dandelion_two:
   species: MyString
   location: MyString
   collected_at: 2025-09-14 08:49:50
-  user: two
+  user_id: <%= ActiveRecord::FixtureSet.identify(:two_user) %>

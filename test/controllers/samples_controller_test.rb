@@ -1,23 +1,31 @@
 require "test_helper"
 
 class SamplesControllerTest < ActionDispatch::IntegrationTest
+  include Devise::Test::IntegrationHelpers
+
+  setup do
+    @user = users(:one_user)
+    sign_in @user
+    @sample = samples(:sample_one)
+  end
+
   test "should get index" do
-    get samples_index_url
+    get samples_path
     assert_response :success
   end
 
   test "should get show" do
-    get samples_show_url
+    get sample_path(@sample)
     assert_response :success
   end
 
   test "should get new" do
-    get samples_new_url
+    get new_sample_path
     assert_response :success
   end
 
   test "should get edit" do
-    get samples_edit_url
+    get edit_sample_path(@sample)
     assert_response :success
   end
 end

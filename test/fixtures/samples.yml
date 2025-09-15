@@ -1,11 +1,13 @@
 # Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
-one:
+sample_one:
   name: MyString
   description: MyText
   image: MyString
+  user_id: <%= ActiveRecord::FixtureSet.identify(:one_user) %>
 
-two:
+sample_two:
   name: MyString
   description: MyText
   image: MyString
+  user_id: <%= ActiveRecord::FixtureSet.identify(:two_user) %>

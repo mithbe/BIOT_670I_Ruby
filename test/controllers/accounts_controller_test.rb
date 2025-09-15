@@ -1,18 +1,27 @@
 require "test_helper"
 
 class AccountsControllerTest < ActionDispatch::IntegrationTest
+  include Devise::Test::IntegrationHelpers
+
+  setup do
+    @user = users(:one_user)
+    sign_in @user
+  end
+
   test "should get show" do
-    get accounts_show_url
+    get account_path
     assert_response :success
   end
 
   test "should get edit" do
-    get accounts_edit_url
+    get edit_account_path
     assert_response :success
   end
 
-  test "should get update" do
-    get accounts_update_url
-    assert_response :success
+  test "should update account" do
+    patch account_path, params: { user: { email: "new_email@example.com" } }
+    assert_redirected_to account_path
+    @user.reload
+    assert_equal "new_email@example.com", @user.email
   end
 end
