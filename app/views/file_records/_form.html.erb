@@ -1,59 +1,54 @@
-
-<%= form_with(model: @file_record, local: true) do |f| %>
+<%= form_with(model: @file_record, local: true, class: "file-form") do |f| %>
   <div>
     <%= f.label :name %>
-    <%= f.text_field :name %>
+    <%= f.text_field :name, class: "form-input" %>
   </div>
 
   <div>
     <%= f.label :file_type %>
-    <%= f.select :file_type, ["genetic", "image", "analysis", "spreadsheet", "other"], {}, data: { action: "change->metadata#toggle" } %>
+    <%= f.select :file_type, ["genetic", "image", "analysis", "spreadsheet", "other"], {}, class: "form-input", data: { action: "change->metadata#toggle" } %>
   </div>
 
-  <!-- Generic metadata -->
   <fieldset>
     <legend>General Metadata</legend>
     <%= f.label :title %>
-    <%= f.text_field :title %>
+    <%= f.text_field :title, class: "form-input" %>
 
     <%= f.label :description %>
-    <%= f.text_area :description %>
+    <%= f.text_area :description, class: "form-input" %>
 
     <%= f.label :project %>
-    <%= f.text_field :project %>
+    <%= f.text_field :project, class: "form-input" %>
 
     <%= f.label :tags, "Tags (comma separated)" %>
-    <%= f.text_field :tags %>
+    <%= f.text_field :tags, class: "form-input" %>
   </fieldset>
 
-  <!-- Genetic metadata -->
   <fieldset data-metadata-target="genetic" hidden>
     <legend>Genetic Metadata</legend>
     <%= f.label :organism %>
-    <%= f.text_field :organism %>
+    <%= f.text_field :organism, class: "form-input" %>
 
     <%= f.label :read_length %>
-    <%= f.number_field :read_length %>
+    <%= f.number_field :read_length, class: "form-input" %>
   </fieldset>
 
-  <!-- Imaging metadata -->
   <fieldset data-metadata-target="image" hidden>
     <legend>Image Metadata</legend>
     <%= f.label :dimensions %>
-    <%= f.text_field :dimensions, placeholder: "1024x768" %>
+    <%= f.text_field :dimensions, placeholder: "1024x768", class: "form-input" %>
 
     <%= f.label :color_mode %>
-    <%= f.text_field :color_mode, placeholder: "RGB, grayscale..." %>
+    <%= f.text_field :color_mode, placeholder: "RGB, grayscale...", class: "form-input" %>
   </fieldset>
 
-  <!-- Spreadsheet metadata -->
   <fieldset data-metadata-target="spreadsheet" hidden>
     <legend>Spreadsheet Metadata</legend>
     <%= f.label :spreadsheet_structure %>
-    <%= f.text_field :spreadsheet_structure, placeholder: "# of sheets, names..." %>
+    <%= f.text_field :spreadsheet_structure, placeholder: "# of sheets, names...", class: "form-input" %>
   </fieldset>
 
   <div>
-    <%= f.submit %>
+    <%= f.submit class: "btn" %>
   </div>
 <% end %>

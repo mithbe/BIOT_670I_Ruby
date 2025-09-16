@@ -1,19 +1,9 @@
-<h1>Upload New File</h1>
 
-<%= form_with(model: @file_record, local: true) do |f| %>
-  <div>
-    <%= f.label :name %>
-    <%= f.text_field :name %>
-  </div>
 
-  <div>
-    <%= f.label :description %>
-    <%= f.text_area :description %>
-  </div>
+<div class="dashboard-buttons">
+  <h1>Upload New File</h1>
 
-  <div>
-    <%= f.submit "Upload" %>
-  </div>
-<% end %>
+  <%= render "form", file_record: @file_record %>
 
-<%= link_to "Back", file_records_path %>
+  <%= link_to "Back to Files", file_records_path, class: "btn" %>
+</div>

@@ -1,14 +1,18 @@
-<!-- Site Map -->
-
 <!-- Flash Messages Demo -->
 <div class="flash-messages">
-  <%# Demo alert %>
   <div class="alert">This is where alerts go!</div>
-
-  <%# Demo notice/update %>
   <div class="notice">This is where updates go!</div>
 </div>
 
+<!-- Sign Up / Sign In buttons for guests -->
+<% unless user_signed_in? %>
+  <div class="guest-actions">
+    <%= link_to "Sign Up", new_user_registration_path, class: "btn" %>
+    <%= link_to "Sign In", new_user_session_path, class: "btn" %>
+  </div>
+<% end %>
+
+<!-- Site Map -->
 <footer class="site-map">
   <h3>Site Map</h3>
   <ul>
