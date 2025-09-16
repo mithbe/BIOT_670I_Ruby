@@ -10,9 +10,14 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
+<<<<<<< Updated upstream
 ActiveRecord::Schema[8.0].define(version: 2025_09_15_212017) do
+=======
+ActiveRecord::Schema[8.0].define(version: 2025_09_16_170000) do
+>>>>>>> Stashed changes
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
+  enable_extension "pg_trgm"
 
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
@@ -49,6 +54,8 @@ ActiveRecord::Schema[8.0].define(version: 2025_09_15_212017) do
     t.bigint "user_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.tsvector "search_vector"
+    t.index ["search_vector"], name: "index_dandelions_on_search_vector", using: :gin
     t.index ["user_id"], name: "index_dandelions_on_user_id"
   end
 
@@ -64,12 +71,14 @@ ActiveRecord::Schema[8.0].define(version: 2025_09_15_212017) do
     t.string "mime_type"
     t.bigint "size"
     t.text "description"
-    t.json "tags"
+    t.jsonb "tags"
     t.string "storage_path"
-    t.json "metadata"
+    t.jsonb "metadata"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.bigint "user_id", null: false
+    t.index ["metadata"], name: "index_file_records_on_metadata", using: :gin
+    t.index ["tags"], name: "index_file_records_on_tags", using: :gin
     t.index ["user_id"], name: "index_file_records_on_user_id"
   end
 
@@ -90,7 +99,9 @@ ActiveRecord::Schema[8.0].define(version: 2025_09_15_212017) do
     t.bigint "file_upload_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.tsvector "search_vector"
     t.index ["file_upload_id"], name: "index_metadata_on_file_upload_id"
+    t.index ["search_vector"], name: "index_metadata_on_search_vector", using: :gin
   end
 
   create_table "samples", force: :cascade do |t|
@@ -113,6 +124,11 @@ ActiveRecord::Schema[8.0].define(version: 2025_09_15_212017) do
     t.string "state"
     t.string "zip_code"
     t.bigint "user_id", null: false
+<<<<<<< Updated upstream
+=======
+    t.tsvector "search_vector"
+    t.index ["search_vector"], name: "index_userinfos_on_search_vector", using: :gin
+>>>>>>> Stashed changes
     t.index ["user_id"], name: "index_userinfos_on_user_id", unique: true
   end
 
