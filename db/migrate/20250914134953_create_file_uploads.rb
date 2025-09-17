@@ -5,7 +5,6 @@ class CreateFileUploads < ActiveRecord::Migration[8.0]
       t.string :filetype
       t.references :user, null: false, foreign_key: true
       t.references :dandelion, null: false, foreign_key: true
-
       t.timestamps
     end
   end

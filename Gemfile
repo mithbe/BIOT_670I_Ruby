@@ -63,4 +63,8 @@ group :test do
   gem "selenium-webdriver"
 end
 
-gem "rubocop", "~> 1.80", group: :development
+group :development do
+  gem "rubocop", "~> 1.80"
+  gem "rails-erd"
+  gem "web-console"
+end

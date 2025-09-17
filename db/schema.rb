@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_09_15_212017) do
+ActiveRecord::Schema[8.0].define(version: 2025_09_17_023257) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -46,10 +46,10 @@ ActiveRecord::Schema[8.0].define(version: 2025_09_15_212017) do
     t.string "species"
     t.string "location"
     t.datetime "collected_at"
-    t.bigint "user_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["user_id"], name: "index_dandelions_on_user_id"
+    t.bigint "userinfo_id"
+    t.index ["userinfo_id"], name: "index_dandelions_on_userinfo_id"
   end
 
   create_table "dandelions_userinfos", id: false, force: :cascade do |t|
@@ -60,7 +60,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_09_15_212017) do
   create_table "file_records", force: :cascade do |t|
     t.string "name"
     t.string "original_name"
-    t.string "file_type"
+    t.string "upload_type"
     t.string "mime_type"
     t.bigint "size"
     t.text "description"
@@ -69,28 +69,36 @@ ActiveRecord::Schema[8.0].define(version: 2025_09_15_212017) do
     t.json "metadata"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.bigint "user_id", null: false
-    t.index ["user_id"], name: "index_file_records_on_user_id"
-  end
-
-  create_table "file_uploads", force: :cascade do |t|
+    t.bigint "userinfo_id"
+    t.bigint "dandelion_id"
     t.string "filename"
-    t.string "filetype"
-    t.bigint "user_id", null: false
-    t.bigint "dandelion_id", null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["dandelion_id"], name: "index_file_uploads_on_dandelion_id"
-    t.index ["user_id"], name: "index_file_uploads_on_user_id"
+    t.index ["userinfo_id"], name: "index_file_records_on_userinfo_id"
   end
 
   create_table "metadata", force: :cascade do |t|
     t.string "key"
     t.string "value"
-    t.bigint "file_upload_id", null: false
+    t.bigint "file_record_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["file_upload_id"], name: "index_metadata_on_file_upload_id"
+    t.index ["file_record_id"], name: "index_metadata_on_file_record_id"
+  end
+
+  create_table "metadatum", force: :cascade do |t|
+    t.bigint "file_record_id", null: false
+    t.string "key", null: false
+    t.string "value"
+    t.string "data_type"
+    t.string "source"
+    t.jsonb "additional_json"
+    t.text "description"
+    t.string "category"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["category"], name: "index_metadatum_on_category"
+    t.index ["file_record_id", "key"], name: "index_metadatum_on_file_record_id_and_key", unique: true
+    t.index ["file_record_id"], name: "index_metadatum_on_file_record_id"
+    t.index ["key"], name: "index_metadatum_on_key"
   end
 
   create_table "samples", force: :cascade do |t|
@@ -99,11 +107,11 @@ ActiveRecord::Schema[8.0].define(version: 2025_09_15_212017) do
     t.string "image"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.bigint "user_id", null: false
-    t.index ["user_id"], name: "index_samples_on_user_id"
   end
 
   create_table "userinfos", force: :cascade do |t|
+    t.string "name"
+    t.string "email"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "first_name"
@@ -112,29 +120,19 @@ ActiveRecord::Schema[8.0].define(version: 2025_09_15_212017) do
     t.string "city"
     t.string "state"
     t.string "zip_code"
-    t.bigint "user_id", null: false
-    t.index ["user_id"], name: "index_userinfos_on_user_id", unique: true
-  end
-
-  create_table "users", force: :cascade do |t|
-    t.string "email", default: "", null: false
     t.string "encrypted_password", default: "", null: false
     t.string "reset_password_token"
     t.datetime "reset_password_sent_at"
     t.datetime "remember_created_at"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["email"], name: "index_users_on_email", unique: true
-    t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
+    t.index ["email"], name: "index_userinfos_on_email", unique: true
+    t.index ["reset_password_token"], name: "index_userinfos_on_reset_password_token", unique: true
   end
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
-  add_foreign_key "dandelions", "users"
-  add_foreign_key "file_records", "users"
-  add_foreign_key "file_uploads", "dandelions"
-  add_foreign_key "file_uploads", "users"
-  add_foreign_key "metadata", "file_uploads"
-  add_foreign_key "samples", "users"
-  add_foreign_key "userinfos", "users"
+  add_foreign_key "dandelions", "userinfos"
+  add_foreign_key "file_records", "dandelions"
+  add_foreign_key "file_records", "userinfos"
+  add_foreign_key "metadata", "file_records"
+  add_foreign_key "metadatum", "file_records"
 end
