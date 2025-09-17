@@ -11,16 +11,17 @@ class AccountsController < ApplicationController
 
   def update
     @user = current_user
-    if @user.update(user_params)
-      redirect_to account_path, notice: "Account updated"
+    if @user.update(account_params)
+      redirect_to account_path, notice: "Account updated successfully."
     else
+      flash.now[:alert] = "Failed to update account."
       render :edit
     end
   end
 
   private
 
-  def user_params
+  def account_params
     params.require(:user).permit(:email, :password, :password_confirmation)
   end
 end
