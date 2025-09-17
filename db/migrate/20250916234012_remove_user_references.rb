@@ -5,4 +5,3 @@ class RemoveUserReferences < ActiveRecord::Migration[7.0]
     remove_reference :file_uploads, :user, foreign_key: true
   end
 end
-

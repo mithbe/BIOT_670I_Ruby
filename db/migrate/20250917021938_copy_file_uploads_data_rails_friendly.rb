@@ -25,4 +25,3 @@ class CopyFileUploadsDataRailsFriendly < ActiveRecord::Migration[7.0]
     FileRecord.where(id: FileUpload.pluck(:id)).delete_all
   end
 end
-

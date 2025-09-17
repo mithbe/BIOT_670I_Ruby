@@ -6,4 +6,3 @@ class AddUserinfoReferences < ActiveRecord::Migration[7.0]
     add_reference :file_uploads, :userinfo, foreign_key: true
   end
 end
-

@@ -12,4 +12,3 @@ class MergeFileUploadsIntoFileRecords < ActiveRecord::Migration[7.0]
     add_foreign_key :file_records, :userinfos unless foreign_key_exists?(:file_records, :userinfos)
   end
 end
-

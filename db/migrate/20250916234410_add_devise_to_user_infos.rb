@@ -4,7 +4,7 @@ class AddDeviseToUserInfos < ActiveRecord::Migration[7.0]
   def change
     change_table :userinfos, bulk: true do |t|
       ## Database authenticatable
-      #t.string :email,              null: false, default: ""
+      # t.string :email,              null: false, default: ""
       t.string :encrypted_password, null: false, default: ""
 
       ## Recoverable
@@ -33,10 +33,9 @@ class AddDeviseToUserInfos < ActiveRecord::Migration[7.0]
       # t.datetime :locked_at
     end
 
-    #add_index :userinfos, :email,                unique: true
+    # add_index :userinfos, :email,                unique: true
     add_index :userinfos, :reset_password_token, unique: true
     # add_index :userinfos, :confirmation_token,   unique: true
     # add_index :userinfos, :unlock_token,         unique: true
   end
 end
-

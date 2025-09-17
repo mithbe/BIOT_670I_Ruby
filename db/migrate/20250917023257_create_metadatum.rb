@@ -14,9 +14,8 @@ class CreateMetadatum < ActiveRecord::Migration[7.0]
     end
 
     # Add indexes for faster lookups
-    add_index :metadatum, [:file_record_id, :key], unique: true
+    add_index :metadatum, [ :file_record_id, :key ], unique: true
     add_index :metadatum, :key
     add_index :metadatum, :category
   end
 end
-
