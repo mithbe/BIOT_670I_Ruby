@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_09_17_023257) do
+ActiveRecord::Schema[8.0].define(version: 2025_09_17_031159) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -75,15 +75,6 @@ ActiveRecord::Schema[8.0].define(version: 2025_09_17_023257) do
     t.index ["userinfo_id"], name: "index_file_records_on_userinfo_id"
   end
 
-  create_table "metadata", force: :cascade do |t|
-    t.string "key"
-    t.string "value"
-    t.bigint "file_record_id", null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["file_record_id"], name: "index_metadata_on_file_record_id"
-  end
-
   create_table "metadatum", force: :cascade do |t|
     t.bigint "file_record_id", null: false
     t.string "key", null: false
@@ -133,6 +124,5 @@ ActiveRecord::Schema[8.0].define(version: 2025_09_17_023257) do
   add_foreign_key "dandelions", "userinfos"
   add_foreign_key "file_records", "dandelions"
   add_foreign_key "file_records", "userinfos"
-  add_foreign_key "metadata", "file_records"
   add_foreign_key "metadatum", "file_records"
 end
