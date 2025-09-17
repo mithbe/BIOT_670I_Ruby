@@ -1,9 +1,12 @@
 class ApplicationController < ActionController::Base
-  # Only allow modern browsers supporting webp images, web push, badges, import maps, CSS nesting, and CSS :has.
+  # Only allow modern browsers supporting modern features
   allow_browser versions: :modern
 
+  # Require authentication on all controllers by default
   before_action :authenticate_user!
-end
-def after_sign_in_path_for(resource)
-  root_path  # Goes to home#dashboard
+
+  # Redirect users after login
+  def after_sign_in_path_for(resource)
+    root_path # goes to home#dashboard
+  end
 end

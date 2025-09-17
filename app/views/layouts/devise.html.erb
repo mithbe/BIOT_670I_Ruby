@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Rubra - Authentication</title>
+  <%= csrf_meta_tags %>
+  <%= csp_meta_tag %>
+
+  <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
+  <%= javascript_importmap_tags %>
+</head>
+
+<body>
+<header class="top-banner">
+  <div class="banner-content">
+    <%= image_tag "rubra_symbol.png", alt: "Rubra Logo", class: "banner-logo" %>
+    <h1 class="site-name">Rubra</h1>
+    <p class="slogan">The tether between scattered dandelions and rubber research</p>
+  </div>
+</header>
+
+<main class="devise-container">
+  <% if notice %>
+    <p class="notice"><%= notice %></p>
+  <% end %>
+  <% if alert %>
+    <p class="alert"><%= alert %></p>
+  <% end %>
+
+  <%= yield %>
+</main>
+</body>
+</html>

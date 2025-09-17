@@ -1,34 +1,83 @@
-.top-banner {
-    background-color: lightcoral;
-    color: cornsilk;
-    padding: 20px 40px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    position: relative;
+/* -------------------------------
+   Body
+---------------------------------*/
+body {
+    background-color: #fff8dc; /* creamy white background */
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    margin: 0;
+    padding: 0;
 }
 
-/* Logo left */
-.logo-left {
-    position: absolute;
-    left: 40px;
-    top: 20px;
+/* -------------------------------
+   Top Banner
+---------------------------------*/
+.top-banner {
+    background-color: lightcoral;
+    height: 120px;
+    color: cornsilk;
+    align-items: center;
+}
+
+.top-banner .banner-content {
+    display: flex;
+    align-items: center;         /* vertical alignment */
+    justify-content: space-between; /* separates left, center, right columns */
+}
+
+.banner-center {
+    display: flex;
+    flex-direction: column;  /* stack site name + slogan */
+    align-items: center;     /* horizontal center */
+    justify-content: center; /* vertical center within column */
+    text-align: center;
 }
 
 .banner-logo {
     height: 60px;
-    width: auto;
-    border-radius: 8px; /* soften corners */
-        background-color: lightcoral; /* matches banner */
-        mix-blend-mode: multiply;     /* blends edges */
-    }
+    background-color: lightcoral;
+    padding: 5px;
+    border radius: 4px;
 }
 
-/* Centered site name + slogan */
-.banner-content {
-    text-align: center;
+/* -------------------------------
+   Buttons
+---------------------------------*/
+.btn {
+    display: inline-block;
+    padding: 12px 25px;
+    margin: 0 5px;
+    background-color: lightcoral;
+    color: cornsilk;
+    text-decoration: none;
+    border-radius: 8px;
+    font-weight: bold;
+    transition: background-color 0.2s, transform 0.1s;
 }
 
+.btn:hover {
+    background-color: #e06b66; /* slightly darker coral */
+    transform: translateY(-2px);
+}
+.dashboard-buttons .field {
+    margin-bottom: 15px;
+}
+
+.dashboard-buttons .field label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+}
+
+.dashboard-buttons .field input {
+    padding: 8px;
+    width: 100%;
+    max-width: 400px;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+}
+/* -------------------------------
+   Flash messages
+---------------------------------*/
 .flash-messages .notice {
     background-color: #d4edda;
     color: #155724;
@@ -44,26 +93,22 @@
     border-radius: 6px;
     margin-bottom: 10px;
 }
-.site-name {
-    font-size: 2.5rem;
-    font-weight: bold;
-    margin: 0;
+.flash-messages {
+    max-width: 900px;
+    margin: 20px auto; /* space below banner */
 }
 
-.slogan {
-    font-size: 1.2rem;
-    margin-top: 5px;
+.guest-actions {
+    text-align: center;
+    margin: 20px auto;
 }
 
-/* Top-right user actions (as before) */
-.user-actions {
-    position: absolute;
-    top: 20px;
-    right: 40px;
-    display: flex;
-    align-items: center;
-    gap: 10px;
+.guest-actions .btn {
+    margin: 10px;
 }
+/* -------------------------------
+   Dashboard buttons
+---------------------------------*/
 .dashboard-buttons {
     display: flex;
     justify-content: center; /* center horizontally */
@@ -72,6 +117,9 @@
     margin: 20px auto 40px;  /* space below banner */
 }
 
+/* -------------------------------
+   Site Map
+---------------------------------*/
 .site-map {
     background-color: #fff8dc; /* same creamy white as body */
     color: #333;
@@ -107,4 +155,23 @@
 
 .site-map ul li a:hover {
     color: #e06b66; /* slightly darker coral on hover */
+}
+
+/* -------------------------------
+   Form uploads
+---------------------------------*/
+
+.file-form div, .file-form fieldset {
+    margin-bottom: 15px;
+}
+
+.file-form .form-input {
+    width: 100%;
+    padding: 8px 12px;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+}
+
+.file-list li {
+    margin-bottom: 10px;
 }
