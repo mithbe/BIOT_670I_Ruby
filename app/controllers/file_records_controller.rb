@@ -1,6 +1,10 @@
 class FileRecordsController < ApplicationController
   def index
-    @file_records = FileRecord.all
+    if params[:search].present?
+      @file_records = FileRecord.typesense_search(params[:search])
+    else
+      @file_records = FileRecord.all
+    end
   end
 
   def new

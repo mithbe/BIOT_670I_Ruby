@@ -1,6 +1,13 @@
 <div class="dashboard-buttons">
   <h1>All Files</h1>
 
+  <div class="search-form-container">
+    <%= form_with url: file_records_path, method: :get, data: { turbo: false } do |form| %>
+      <%= form.text_field :search, placeholder: "Search...", class: "search-input" %>
+      <%= form.submit "Search", class: "btn search-btn" %>
+    <% end %>
+  </div>
+
   <%= link_to "Upload New File", new_file_record_path, class: "btn" %>
 
   <ul class="file-list">

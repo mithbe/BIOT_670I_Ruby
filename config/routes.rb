@@ -5,7 +5,11 @@ Rails.application.routes.draw do
   resource :account, only: [ :show, :edit, :update ]
 
   # File uploads / search
-  resources :file_records, only: [ :index, :new, :create, :show ]
+  resources :file_records, only: [ :index, :new, :create, :show ] do
+    collection do
+      get :search
+    end
+  end
 
   # Root page (dashboard)
   root "home#dashboard"
