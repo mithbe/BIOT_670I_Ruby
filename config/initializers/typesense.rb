@@ -1,18 +1,18 @@
 # This file initializes the Typesense client, making it accessible throughout your Rails application.
 
 # Load the Typesense gem
-require 'typesense'
+require "typesense"
 
 # Configure the client connection details.
 # We use environment variables for host, port, protocol, and API key so that these values
 # can be easily changed for different environments (e.g., development vs. production).
 client = Typesense::Client.new(
-  api_key:         ENV.fetch('TYPESENSE_API_KEY', 'xyz'),
-  nodes: [{
-    host:     ENV.fetch('TYPESENSE_HOST', 'localhost'),
-    port:     ENV.fetch('TYPESENSE_PORT', 8108),
-    protocol: ENV.fetch('TYPESENSE_PROTOCOL', 'http')
-  }],
+  api_key:         ENV.fetch("TYPESENSE_API_KEY", "xyz"),
+  nodes: [ {
+    host:     ENV.fetch("TYPESENSE_HOST", "localhost"),
+    port:     ENV.fetch("TYPESENSE_PORT", 8108),
+    protocol: ENV.fetch("TYPESENSE_PROTOCOL", "http")
+  } ],
   connection_timeout_seconds: 2
 )
 

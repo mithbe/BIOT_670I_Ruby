@@ -8,17 +8,17 @@ module Typesenseable
     # script or other parts of the application.
     def self.typesense_schema
       {
-        'name' => 'file_records',
-        'fields' => [
-          { 'name' => 'id', 'type' => 'string' },
+        "name" => "file_records",
+        "fields" => [
+          { "name" => "id", "type" => "string" },
           # We've added `sortable: true` to the fields we might want to sort by.
-          { 'name' => 'name', 'type' => 'string', 'optional' => true, 'sortable' => true },
-          { 'name' => 'original_name', 'type' => 'string', 'optional' => true, 'sortable' => true },
-          { 'name' => 'description', 'type' => 'string', 'optional' => true, 'sortable' => true },
-          { 'name' => 'tags', 'type' => 'string[]', 'optional' => true },
-          { 'name' => 'metadata', 'type' => 'string', 'optional' => true }
+          { "name" => "name", "type" => "string", "optional" => true, "sortable" => true },
+          { "name" => "original_name", "type" => "string", "optional" => true, "sortable" => true },
+          { "name" => "description", "type" => "string", "optional" => true, "sortable" => true },
+          { "name" => "tags", "type" => "string[]", "optional" => true },
+          { "name" => "metadata", "type" => "string", "optional" => true }
         ],
-        'default_sorting_field' => 'name'
+        "default_sorting_field" => "name"
       }
     end
 
@@ -27,7 +27,7 @@ module Typesenseable
     after_save do
       begin
         document = as_typesense_document
-        TYPESENSE_CLIENT.collections['file_records'].documents.upsert(document)
+        TYPESENSE_CLIENT.collections["file_records"].documents.upsert(document)
       rescue Typesense::Error => e
         Rails.logger.error("Typesense indexing error: #{e.message}")
       end
@@ -37,7 +37,7 @@ module Typesenseable
     # It ensures the record is also deleted from Typesense.
     after_destroy do
       begin
-        TYPESENSE_CLIENT.collections['file_records'].documents[id].delete
+        TYPESENSE_CLIENT.collections["file_records"].documents[id].delete
       rescue Typesense::Error => e
         Rails.logger.error("Typesense deletion error: #{e.message}")
       end
@@ -47,15 +47,15 @@ module Typesenseable
     def as_typesense_document
       # Convert tags and metadata JSON to a string so Typesense can index it.
       tags_string = tags.is_a?(Array) ? tags.map(&:to_s) : []
-      metadata_string = metadata.is_a?(Hash) ? metadata.to_s : ''
+      metadata_string = metadata.is_a?(Hash) ? metadata.to_s : ""
 
       {
-        'id' => id.to_s,
-        'name' => name.to_s,
-        'original_name' => original_name.to_s,
-        'description' => description.to_s,
-        'tags' => tags_string,
-        'metadata' => metadata_string
+        "id" => id.to_s,
+        "name" => name.to_s,
+        "original_name" => original_name.to_s,
+        "description" => description.to_s,
+        "tags" => tags_string,
+        "metadata" => metadata_string
       }
     end
   end
