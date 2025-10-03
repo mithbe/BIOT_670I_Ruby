@@ -1,15 +1,19 @@
 class UploadBatch < ApplicationRecord
   belongs_to :user
-  has_one_attached :archive  # Active Storage attachment
-  STATUSES = %w[uploaded prepared committed expired].freeze
 
-  validates :status, inclusion: { in: STATUSES }
+  has_one_attached :archive    # relies on Active Storage
 
-  def prepared!
-    update!(status: "prepared")
+  # files is a JSON column; store an array of file descriptors
+  # Example element: { "path": "dir/file.png", "size": 1234, "ext": ".png", "type": "image" }
+
+  validates :status, presence: true
+
+  # convenience helpers
+  def prepared?
+    status == "prepared"
   end
 
-  def committed!
-    update!(status: "committed")
+  def committed?
+    status == "committed"
   end
 end

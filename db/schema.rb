@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_09_15_212017) do
+ActiveRecord::Schema[8.0].define(version: 2025_10_01_043137) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -93,14 +93,14 @@ ActiveRecord::Schema[8.0].define(version: 2025_09_15_212017) do
     t.index ["file_upload_id"], name: "index_metadata_on_file_upload_id"
   end
 
-  create_table "samples", force: :cascade do |t|
-    t.string "name"
-    t.text "description"
-    t.string "image"
+  create_table "upload_batches", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.json "files", default: [], null: false
+    t.string "status", default: "uploaded", null: false
+    t.datetime "expires_at"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.bigint "user_id", null: false
-    t.index ["user_id"], name: "index_samples_on_user_id"
+    t.index ["user_id"], name: "index_upload_batches_on_user_id"
   end
 
   create_table "userinfos", force: :cascade do |t|
@@ -135,6 +135,6 @@ ActiveRecord::Schema[8.0].define(version: 2025_09_15_212017) do
   add_foreign_key "file_uploads", "dandelions"
   add_foreign_key "file_uploads", "users"
   add_foreign_key "metadata", "file_uploads"
-  add_foreign_key "samples", "users"
+  add_foreign_key "upload_batches", "users"
   add_foreign_key "userinfos", "users"
 end

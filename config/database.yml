@@ -19,7 +19,7 @@ default: &default
   # https://guides.rubyonrails.org/configuring.html#database-pooling
   pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
   username: postgres
-  password: Cardinals22!
+  password: Alpha1one!
   host: 127.0.0.1
 
 
@@ -27,7 +27,7 @@ development:
   <<: *default
   database: dandelion_warehouse_development
   username: postgres
-  password: Cardinals22!
+  password: Alpha1one!
   host: localhost
 
   # The specified database role being used to connect to PostgreSQL.

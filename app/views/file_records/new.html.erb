@@ -1,7 +1,15 @@
-
-
 <div class="dashboard-buttons">
   <h1>Upload New File</h1>
+
+  <%= form_with url: bulk_prepare_file_records_path, multipart: true, method: :post do |f| %>
+    <div>
+      <%= f.label :zip_file, "Upload ZIP for Batch Upload" %>
+      <%= f.file_field :zip_file %>
+    </div>
+    <%= f.submit "Upload ZIP (Batch Mode)", class: "btn btn-secondary" %>
+  <% end %>
+
+  <hr>
 
   <%= render "form", file_record: @file_record %>
 

@@ -5,7 +5,8 @@ Rails.application.routes.draw do
 
   resources :file_records, only: [ :index, :new, :create, :show ] do
     collection do
-      post :bulk_prepare   # step 1: upload ZIP and preview file list
+      post :bulk_prepare # step 1: upload ZIP and preview file list
+      get  :bulk_preview
       post :bulk_commit    # step 2: confirm metadata, extract and save
     end
   end
