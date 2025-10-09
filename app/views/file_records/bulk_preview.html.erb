@@ -1,16 +1,9 @@
 <!-- app/views/file_records/bulk_preview.html.erb -->
-<%# Bulk preview / metadata editing page for an UploadBatch %>
 <h1>Bulk Upload Preview</h1>
 
 <p>
-  <strong>Batch ID:</strong> <%= @batch.id %>
-  &nbsp;&nbsp;|&nbsp;&nbsp;
-  <strong>Archive:</strong>
-  <% if @batch.archive.attached? %>
-    <%= @batch.archive.filename.to_s %>
-  <% else %>
-    (no archive attached)
-  <% end %>
+  <strong>Batch ID:</strong> <%= @batch.id %> &nbsp;&nbsp;|&nbsp;&nbsp;
+  <strong>Files:</strong> <%= @files.size %>
 </p>
 
 <%= form_with url: bulk_commit_file_records_path, local: true do |f| %>
@@ -31,14 +24,13 @@
 
     <tbody>
     <% @files.each_with_index do |file, i| %>
-      <% path = file["path"] %>
-      <% ftype = file["type"] %>
-      <% size = file["size"] %>
+      <% path = file[:path] || file["path"] %>
+      <% ftype = file[:type] || file["type"] %>
+      <% size = file[:size] || file["size"] %>
 
       <tr>
-        <!-- readonly info -->
         <td>
-          <%= file["path"] %>
+          <%= path %>
           <%= hidden_field_tag "rows[#{i}][path]", path %>
         </td>
 
@@ -52,7 +44,6 @@
           <%= hidden_field_tag "rows[#{i}][size]", size %>
         </td>
 
-        <!-- editable defaults -->
         <td>
           <%= select_tag "rows[#{i}][type_of_study]",
                          options_for_select([
@@ -65,13 +56,8 @@
                          include_blank: true %>
         </td>
 
-        <td>
-          <%= text_field_tag "rows[#{i}][keyword_1]" %>
-        </td>
-
-        <td>
-          <%= text_field_tag "rows[#{i}][keyword_2]" %>
-        </td>
+        <td><%= text_field_tag "rows[#{i}][keyword_1]" %></td>
+        <td><%= text_field_tag "rows[#{i}][keyword_2]" %></td>
 
         <td>
           <%= select_tag "rows[#{i}][species]",
@@ -90,7 +76,7 @@
   </table>
 
   <div style="margin-top: 1rem;">
-    <%= f.submit "Commit Batch and Store Files" %>
+    <%= f.submit "Commit Batch and Store Files", class: "btn" %>
     <%= link_to "Cancel and Return", new_file_record_path, class: "btn" %>
   </div>
 <% end %>
