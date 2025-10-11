@@ -4,23 +4,30 @@
   <thead>
   <tr>
     <th>ID</th>
-    <th>Filename</th>
-    <th>User ID</th>
+    <th>File Name</th>
+    <th>Lab / Author</th>
+    <th>Type of Research</th>
+    <th>Stage</th>
+    <th>Status</th>
     <th>Actions</th>
   </tr>
   </thead>
-
   <tbody>
-  <% @records.each do |record| %>
+  <% @metadata.each do |metadatum| %>
     <tr>
-      <td><%= record.id %></td>
-      <td><%= record.original_filename %></td>
-      <td><%= record.user_id %></td>
+      <td><%= metadatum.id %></td>
+      <td><%= metadatum.original_filename %></td>
+      <td><%= metadatum.lab_or_author %></td>
+      <td><%= metadatum.research_type %></td>
+      <td><%= metadatum.stage_of_development %></td>
+      <td><%= metadatum.processing_status %></td>
       <td>
-        <%= link_to "View", admin_metadata_path(record) %> |
-        <%= link_to "Edit", edit_admin_metadata_path(record) %>
+        <%= link_to "Show", admin_metadata_path(metadatum) %> |
+        <%= link_to "Edit", edit_admin_metadata_path(metadatum) %>
       </td>
     </tr>
   <% end %>
   </tbody>
 </table>
+
+<%= link_to "Back to Dashboard", root_path %>

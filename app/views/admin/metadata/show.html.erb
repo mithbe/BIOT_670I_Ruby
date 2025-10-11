@@ -1,2 +1,39 @@
-<h1>Admin::Metadata#show</h1>
-<p>Find me in app/views/admin/metadata/show.html.erb</p>
+<h1>Metadata Details</h1>
+
+<p>
+  <strong>ID:</strong>
+  <%= @metadata.id %>
+</p>
+
+<p>
+  <strong>Original Filename:</strong>
+  <%= @metadata.original_filename %>
+</p>
+
+<p>
+  <strong>Lab / Author:</strong>
+  <%= @metadata.lab_or_author %>
+</p>
+
+<p>
+  <strong>Type of Research:</strong>
+  <%= @metadata.research_type %>
+</p>
+
+<p>
+  <strong>Stage of Development:</strong>
+  <%= @metadata.stage_of_development %>
+</p>
+
+<p>
+  <strong>Processing Status:</strong>
+  <%= @metadata.processing_status %>
+</p>
+
+<p>
+  <strong>Metadata JSON:</strong>
+<pre><%= JSON.pretty_generate(@metadata.metadata_json || {}) %></pre>
+</p>
+
+<%= link_to "Edit Metadata", edit_admin_metadata_path(@metadata) %> |
+<%= link_to "Back to Metadata List", admin_metadata_index_path %>

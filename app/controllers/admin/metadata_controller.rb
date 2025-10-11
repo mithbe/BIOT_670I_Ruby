@@ -1,9 +1,9 @@
 class Admin::MetadataController < ApplicationController
-  before_action :set_record, only: [:show, :edit, :update]
+  before_action :set_metadatum, only: [:show, :edit, :update]
 
   # GET /admin/metadata
   def index
-    @records = FileRecord.all
+    @metadata = Metadatum.all
   end
 
   # GET /admin/metadata/:id
@@ -16,8 +16,8 @@ class Admin::MetadataController < ApplicationController
 
   # PATCH/PUT /admin/metadata/:id
   def update
-    if @record.update(metadata_params)
-      redirect_to admin_metadata_path(@record), notice: "Metadata updated successfully."
+    if @metadatum.update(metadatum_params)
+      redirect_to admin_metadata_path(@metadatum), notice: "Metadata updated successfully."
     else
       render :edit
     end
@@ -25,12 +25,39 @@ class Admin::MetadataController < ApplicationController
 
   private
 
-  def set_record
-    @record = FileRecord.find(params[:id])
+  def set_metadatum
+    @metadatum = Metadatum.find(params[:id])
   end
 
-  def metadata_params
-    params.require(:file_record).permit(:metadata_json)
+  def metadatum_params
+    params.require(:metadatum).permit(
+      :lab_or_author,
+      :location,
+      :research_type,
+      :dandelion_strain,
+      :stage_of_development,
+      :description,
+      :growing_info,
+      :climate,
+      :soil_type,
+      :soil_texture,
+      :ph,
+      :rubber_method,
+      :rubber_yield,
+      :rubber_analysis,
+      :file_type,
+      :original_filename,
+      :stored_filename,
+      :file_size,
+      :upload_timestamp,
+      :uploader_ip,
+      :version,
+      :processing_status,
+      :errors,
+      :access_level,
+      :metadata_json
+    )
   end
 end
+
 
