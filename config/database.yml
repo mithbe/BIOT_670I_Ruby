@@ -64,7 +64,7 @@ test:
   <<: *default
   database: dandelion_warehouse_test
   username: postgres
-  password: Cardinals22!
+  password: Alpha1one!
   host: localhost
 
 # As with config/credentials.yml, you never want to store sensitive information,

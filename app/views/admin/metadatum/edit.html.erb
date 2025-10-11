@@ -1,0 +1,99 @@
+<h1>Edit Metadata</h1>
+
+<%= form_with(model: [:admin, @metadatum], local: true) do |form| %>
+  <% if @metadatum.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@metadatum.errors.count, "error") %> prohibited this metadata from being saved:</h2>
+      <ul>
+        <% @metadatum.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <fieldset>
+    <legend>Basic Info</legend>
+    <div>
+      <%= form.label :lab_or_author %>
+      <%= form.text_field :lab_or_author %>
+    </div>
+    <div>
+      <%= form.label :location %>
+      <%= form.text_field :location %>
+    </div>
+    <div>
+      <%= form.label :research_type %>
+      <%= form.text_field :research_type %>
+    </div>
+    <div>
+      <%= form.label :dandelion_strain %>
+      <%= form.text_field :dandelion_strain %>
+    </div>
+    <div>
+      <%= form.label :stage_of_development %>
+      <%= form.select :stage_of_development, ["Seed", "Seedling", "Vegetative", "Flowering", "Puffball"] %>
+    </div>
+  </fieldset>
+
+  <fieldset>
+    <legend>Growing Information</legend>
+    <div>
+      <%= form.label :growing_info %>
+      <%= form.text_area :growing_info %>
+    </div>
+    <div>
+      <%= form.label :climate %>
+      <%= form.text_field :climate %>
+    </div>
+    <div>
+      <%= form.label :soil_type %>
+      <%= form.text_field :soil_type %>
+    </div>
+    <div>
+      <%= form.label :soil_texture %>
+      <%= form.text_field :soil_texture %>
+    </div>
+    <div>
+      <%= form.label :ph %>
+      <%= form.number_field :ph, step: 0.1 %>
+    </div>
+  </fieldset>
+
+  <fieldset>
+    <legend>Rubber Production</legend>
+    <div>
+      <%= form.label :rubber_method %>
+      <%= form.text_field :rubber_method %>
+    </div>
+    <div>
+      <%= form.label :rubber_yield %>
+      <%= form.number_field :rubber_yield, step: 0.01 %>
+    </div>
+    <div>
+      <%= form.label :rubber_analysis %>
+      <%= form.text_area :rubber_analysis %>
+    </div>
+  </fieldset>
+
+  <fieldset>
+    <legend>File Info</legend>
+    <div>
+      <%= form.label :file_type %>
+      <%= form.text_field :file_type %>
+    </div>
+    <div>
+      <%= form.label :original_filename %>
+      <%= form.text_field :original_filename %>
+    </div>
+    <div>
+      <%= form.label :stored_filename %>
+      <%= form.text_field :stored_filename %>
+    </div>
+    <div>
+      <%= form.label :file_size %>
+      <%= form.number_field :file_size %>
+    </div>
+    <div>
+      <%= form.label :upload_timestamp %>
+<%= form.datetime

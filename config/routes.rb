@@ -1,4 +1,8 @@
 Rails.application.routes.draw do
+  namespace :admin do
+    resources :metadatum, only: [:index, :show, :edit, :update]
+  end
+
   devise_for :users
 
   resource :account, only: [:show, :edit, :update]
