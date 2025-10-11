@@ -163,7 +163,7 @@ class FileRecordsController < ApplicationController
           size: row["size"],
           storage_path: dest_full,
           metadata: metadata,
-          tags: [row["keyword_1"], row["keyword_2"]].compact
+          tags: [ row["keyword_1"], row["keyword_2"] ].compact
         )
 
         # optional: attach to ActiveStorage if you want

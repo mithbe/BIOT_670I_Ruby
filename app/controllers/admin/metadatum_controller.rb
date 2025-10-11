@@ -1,5 +1,5 @@
 class Admin::MetadatumController < ApplicationController
-  before_action :set_metadatum, only: [:show, :edit, :update]
+  before_action :set_metadatum, only: [ :show, :edit, :update ]
 
   # GET /admin/metadata
   def index
@@ -59,5 +59,3 @@ class Admin::MetadatumController < ApplicationController
     )
   end
 end
-
-

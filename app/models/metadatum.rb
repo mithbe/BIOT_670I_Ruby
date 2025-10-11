@@ -11,7 +11,7 @@ class Metadatum < ApplicationRecord
   private
 
   def index_in_typesense
-    Typesense.client.collections['metadata'].documents.upsert(
+    Typesense.client.collections["metadata"].documents.upsert(
       id: id.to_s,
       lab: lab,
       location: location,
