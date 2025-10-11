@@ -1,0 +1,12 @@
+<h1>Edit Metadata</h1>
+
+<%= form_with model: @record, url: admin_metadata_path(@record), method: :put do |f| %>
+  <div>
+    <%= f.label :metadata_json, "Metadata JSON" %><br>
+    <%= f.text_area :metadata_json, rows: 20, cols: 80 %>
+  </div>
+
+  <div>
+    <%= f.submit "Save Changes" %>
+  </div>
+<% end %>
