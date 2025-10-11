@@ -7,7 +7,7 @@ gem "propshaft"
 # Use Devise for secure user login
 gem "devise"
 # Use postgresql as the database for Active Record
-gem "pg", "~> 1.1"
+gem "pg", "~> 1.6"
 # Use typesense for search
 gem "typesense"
 # Use the Typesense Rails integration gem
