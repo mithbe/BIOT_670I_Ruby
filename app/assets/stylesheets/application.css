@@ -175,3 +175,7 @@ body {
 .file-list li {
     margin-bottom: 10px;
 }
+
+.search-btn {
+  box-shadow: none;
+}
