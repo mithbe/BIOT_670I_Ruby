@@ -1,4 +1,4 @@
-class Admin::MetadataController < ApplicationController
+class Admin::MetadatumController < ApplicationController
   before_action :set_metadatum, only: [:show, :edit, :update]
 
   # GET /admin/metadata
