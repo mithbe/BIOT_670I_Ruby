@@ -1,9 +1,17 @@
-
-
+<!-- app/views/file_records/new.html.erb -->
 <div class="dashboard-buttons">
-  <h1>Upload New File</h1>
+  <h1>Upload Files (Single or Multiple)</h1>
 
-  <%= render "form", file_record: @file_record %>
+  <%= form_with url: bulk_prepare_file_records_path, local: true, html: { multipart: true } do |f| %>
+    <div class="field">
+      <%= f.label :files, "Select one or more files" %><br>
+      <%= f.file_field :files, multiple: true, direct_upload: false, accept: "*/*" %>
+    </div>
+
+    <div class="actions">
+      <%= f.submit "Continue to Metadata", class: "btn" %>
+    </div>
+  <% end %>
 
   <%= link_to "Back to Files", file_records_path, class: "btn" %>
 </div>
