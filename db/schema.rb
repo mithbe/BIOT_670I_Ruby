@@ -13,6 +13,7 @@
 ActiveRecord::Schema[8.0].define(version: 2025_10_01_043137) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
+  enable_extension "pg_trgm"
 
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
@@ -49,6 +50,8 @@ ActiveRecord::Schema[8.0].define(version: 2025_10_01_043137) do
     t.bigint "user_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.tsvector "search_vector"
+    t.index ["search_vector"], name: "index_dandelions_on_search_vector", using: :gin
     t.index ["user_id"], name: "index_dandelions_on_user_id"
   end
 
@@ -64,12 +67,14 @@ ActiveRecord::Schema[8.0].define(version: 2025_10_01_043137) do
     t.string "mime_type"
     t.bigint "size"
     t.text "description"
-    t.json "tags"
+    t.jsonb "tags"
     t.string "storage_path"
-    t.json "metadata"
+    t.jsonb "metadata"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.bigint "user_id", null: false
+    t.index ["metadata"], name: "index_file_records_on_metadata", using: :gin
+    t.index ["tags"], name: "index_file_records_on_tags", using: :gin
     t.index ["user_id"], name: "index_file_records_on_user_id"
   end
 
@@ -90,7 +95,19 @@ ActiveRecord::Schema[8.0].define(version: 2025_10_01_043137) do
     t.bigint "file_upload_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.tsvector "search_vector"
     t.index ["file_upload_id"], name: "index_metadata_on_file_upload_id"
+    t.index ["search_vector"], name: "index_metadata_on_search_vector", using: :gin
+  end
+
+  create_table "samples", force: :cascade do |t|
+    t.string "name"
+    t.text "description"
+    t.string "image"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.bigint "user_id", null: false
+    t.index ["user_id"], name: "index_samples_on_user_id"
   end
 
   create_table "upload_batches", force: :cascade do |t|
@@ -113,6 +130,8 @@ ActiveRecord::Schema[8.0].define(version: 2025_10_01_043137) do
     t.string "state"
     t.string "zip_code"
     t.bigint "user_id", null: false
+    t.tsvector "search_vector"
+    t.index ["search_vector"], name: "index_userinfos_on_search_vector", using: :gin
     t.index ["user_id"], name: "index_userinfos_on_user_id", unique: true
   end
 
@@ -135,6 +154,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_10_01_043137) do
   add_foreign_key "file_uploads", "dandelions"
   add_foreign_key "file_uploads", "users"
   add_foreign_key "metadata", "file_uploads"
+  add_foreign_key "samples", "users"
   add_foreign_key "upload_batches", "users"
   add_foreign_key "userinfos", "users"
 end
