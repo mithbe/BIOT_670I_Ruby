@@ -95,8 +95,12 @@
       <%= form.number_field :file_size %>
     </div>
     <div>
-      <div>
-        <%= form.label :upload_timestamp %>
-        <%= form.datetime_field :upload_timestamp %>
-      </div>
+      <%= form.label :upload_timestamp %>
+      <%= form.datetime_field :upload_timestamp %>
+    </div>
+  </fieldset>
 
+  <div>
+    <%= form.submit "Update Metadata" %>
+  </div>
+<% end %>
