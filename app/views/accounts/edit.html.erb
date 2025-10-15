@@ -13,12 +13,12 @@
 
   <%= form_for(current_user, url: account_path, method: :patch) do |f| %>
     <div class="field">
-      <%= f.label :email %>
-      <%= f.email_field :email, autofocus: true %>
+      <p><strong>Email:</strong> <%= f.object.email %></p>
+      <%= f.hidden_field :email, value: f.object.email %>
     </div>
 
     <div class="field">
-      <%= f.label :password, "New Password (leave blank to keep current)" %>
+      <%= f.label :password, "New Password" %>
       <%= f.password_field :password, autocomplete: "new-password" %>
     </div>
 
