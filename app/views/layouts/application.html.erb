@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Rubra</title>
+  <%= csrf_meta_tags %>
+  <%= csp_meta_tag %>
+
+  <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
+  <%= javascript_importmap_tags %>
+</head>
+
+<body>
+<header class="top-banner">
+  <div class="banner-content">
+    <div class="banner-left">
+      <%= image_tag "rubra_symbol.png", alt: "Rubra Logo", class: "banner-logo" %>
+    </div>
+
+    <div class="banner-center">
+      <h1 class="site-name">Rubra</h1>
+      <p class="slogan">The tether between scattered dandelions and rubber research</p>
+
+   </div>
+
+    <div class="banner-right">
+      <% if user_signed_in? %>
+        <p>Hello, <%= current_user.email %>!</p>
+        <%= link_to "Log Out", destroy_user_session_path, data: { turbo_method: :delete }, class: "btn" %>
+      <% end %>
+    </div>
+  </div>
+</header>
+
+<!-- Flash messages -->
+<p class="notice"><%= notice %></p>
+<p class="alert"><%= alert %></p>
+
+<!-- Main content -->
+<%= yield %>
+</body>
+</html>

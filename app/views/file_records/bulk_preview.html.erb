@@ -1,0 +1,82 @@
+<!-- app/views/file_records/bulk_preview.html.erb -->
+<h1>Bulk Upload Preview</h1>
+
+<p>
+  <strong>Batch ID:</strong> <%= @batch.id %> &nbsp;&nbsp;|&nbsp;&nbsp;
+  <strong>Files:</strong> <%= @files.size %>
+</p>
+
+<%= form_with url: bulk_commit_file_records_path, local: true do |f| %>
+  <%= hidden_field_tag :batch_id, @batch.id %>
+
+  <table border="1" cellpadding="6" cellspacing="0" width="100%">
+    <thead>
+    <tr>
+      <th>File Path</th>
+      <th>Type</th>
+      <th>Size (bytes)</th>
+      <th>Type of Study</th>
+      <th>Keyword 1</th>
+      <th>Keyword 2</th>
+      <th>Species</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    <% @files.each_with_index do |file, i| %>
+      <% path = file[:path] || file["path"] %>
+      <% ftype = file[:type] || file["type"] %>
+      <% size = file[:size] || file["size"] %>
+
+      <tr>
+        <td>
+          <%= path %>
+          <%= hidden_field_tag "rows[#{i}][path]", path %>
+        </td>
+
+        <td>
+          <%= ftype %>
+          <%= hidden_field_tag "rows[#{i}][file_type]", ftype %>
+        </td>
+
+        <td>
+          <%= number_with_delimiter(size || 0) %>
+          <%= hidden_field_tag "rows[#{i}][size]", size %>
+        </td>
+
+        <td>
+          <%= select_tag "rows[#{i}][type_of_study]",
+                         options_for_select([
+                                              ["Land survey","land_survey"],
+                                              ["Molecular","molecular"],
+                                              ["Ecology","ecology"],
+                                              ["Imaging","imaging"],
+                                              ["Computational analysis","computational_analysis"]
+                                            ]),
+                         include_blank: true %>
+        </td>
+
+        <td><%= text_field_tag "rows[#{i}][keyword_1]" %></td>
+        <td><%= text_field_tag "rows[#{i}][keyword_2]" %></td>
+
+        <td>
+          <%= select_tag "rows[#{i}][species]",
+                         options_for_select([
+                                              ["Taraxacum officinale","Taraxacum officinale"],
+                                              ["Taraxacum erythrospermum","Taraxacum erythrospermum"],
+                                              ["Taraxacum kok-saghyz","Taraxacum kok-saghyz"],
+                                              ["Taraxacum japonicum","Taraxacum japonicum"],
+                                              ["Taraxacum albidum","Taraxacum albidum"]
+                                            ]),
+                         include_blank: true %>
+        </td>
+      </tr>
+    <% end %>
+    </tbody>
+  </table>
+
+  <div style="margin-top: 1rem;">
+    <%= f.submit "Commit Batch and Store Files", class: "btn" %>
+    <%= link_to "Cancel and Return", new_file_record_path, class: "btn" %>
+  </div>
+<% end %>
