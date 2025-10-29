@@ -127,7 +127,7 @@ jobs:
         run: bin/rails db:test:prepare test test:system  # Set up DB and run all tests.
 
       - name: Keep screenshots from failed system tests
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v5
         if: failure()  # Only upload if tests fail.
         with:
           name: screenshots
