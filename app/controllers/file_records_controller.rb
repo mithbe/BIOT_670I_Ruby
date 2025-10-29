@@ -1,10 +1,12 @@
 class FileRecordsController < ApplicationController
+  # Require users to be logged in
   before_action :authenticate_user!
 
   # -----------------------------
   # STANDARD ACTIONS
   # -----------------------------
 
+  # List all file records, optionally filtered by search term
   def index
     if params[:search].present?
       @file_records = FileRecord.typesense_search(params[:search])
@@ -13,12 +15,14 @@ class FileRecordsController < ApplicationController
     end
   end
 
+  # Show details for a single file record
   def show
     @file_record = FileRecord.find(params[:id])
   end
 
+  # Display form for new file upload
+  # Handles batch preview if coming from a bulk upload
   def new
-    # If this is coming from a batch upload (after bulk_prepare)
     if params[:batch_id]
       @batch = current_user.upload_batches.find_by(id: params[:batch_id])
 
@@ -33,6 +37,7 @@ class FileRecordsController < ApplicationController
     end
   end
 
+  # Save a new file record
   def create
     @file_record = FileRecord.new(file_record_params.merge(user: current_user))
 
@@ -47,7 +52,7 @@ class FileRecordsController < ApplicationController
   # BULK UPLOAD FLOW
   # -----------------------------
 
-  # Step 1: Receive and prepare uploaded files (zip or single)
+  # Step 1: Receive and stage uploaded files (single or zip)
   def bulk_prepare
     uploaded_items = Array.wrap(params[:files]).reject(&:blank?)
     if uploaded_items.blank?
@@ -68,7 +73,7 @@ class FileRecordsController < ApplicationController
       end
     end
 
-    # normalize & ensure every element is a hash with expected keys
+    # Normalize each staged file to expected hash format
     normalized = staged.map do |e|
       if e.is_a?(String)
         {
@@ -89,6 +94,7 @@ class FileRecordsController < ApplicationController
       end
     end
 
+    # Update batch with staged files and mark as prepared
     @batch.update!(files: normalized, status: "prepared")
     Rails.logger.info("[bulk_prepare] batch=#{@batch.id} files=#{normalized.length}")
     redirect_to new_file_record_path(batch_id: @batch.id)
@@ -98,7 +104,7 @@ class FileRecordsController < ApplicationController
     redirect_to new_file_record_path, alert: "Failed to process upload: #{e.message}"
   end
 
-  # Step 2: Commit metadata and create FileRecord entries
+  # Step 2: Commit staged files to FileRecord entries and save metadata
   def bulk_commit
     batch = current_user.upload_batches.find(params[:batch_id])
     rows = params[:rows] || {}
@@ -114,19 +120,16 @@ class FileRecordsController < ApplicationController
       begin
         temp_path = row["temp_path"] || row[:temp_path]
         entry_path = row["path"] || row[:path] || File.basename(temp_path.to_s)
-        # sanitize and prevent traversal
         entry_path = Pathname.new(entry_path).cleanpath.to_s
-        if entry_path.start_with?("..")
-          raise "Invalid entry path #{entry_path}"
-        end
+        raise "Invalid entry path #{entry_path}" if entry_path.start_with?("..")
 
         dest_full = File.join("/mnt/Dandelionfiles", entry_path)
         FileUtils.mkdir_p(File.dirname(dest_full))
 
+        # Move file from temp path or extract from archive
         if temp_path && File.exist?(temp_path)
           FileUtils.mv(temp_path, dest_full)
         else
-          # try extract from archive if present in batch
           if batch.archive&.attached?
             extracted_ok = false
             batch.archive.open(tmpdir: Rails.root.join("tmp")) do |archive_path|
@@ -145,7 +148,7 @@ class FileRecordsController < ApplicationController
           end
         end
 
-        # build metadata
+        # Build metadata and create FileRecord
         metadata = {
           "type_of_study" => row["type_of_study"],
           "keyword_1" => row["keyword_1"],
@@ -166,9 +169,6 @@ class FileRecordsController < ApplicationController
           tags: [ row["keyword_1"], row["keyword_2"] ].compact
         )
 
-        # optional: attach to ActiveStorage if you want
-        # fr.file.attach(io: File.open(dest_full, "rb"), filename: File.basename(dest_full))
-
         saved += 1
       rescue => e
         Rails.logger.error("[bulk_commit] failed for #{row.inspect}: #{e.class}: #{e.message}")
@@ -182,35 +182,33 @@ class FileRecordsController < ApplicationController
     Rails.logger.error("[bulk_commit] #{e.class}: #{e.message}\n#{e.backtrace.first(8).join("\n")}")
     redirect_to new_file_record_path, alert: "Failed to commit batch: #{e.message}"
   end
+
   # -----------------------------
   # PRIVATE HELPERS
   # -----------------------------
 
   private
 
-  # Extracts contents of a .zip file into a temporary directory
+  # Extracts files from a zip archive into a temporary folder
   def extract_zip(uploaded_zip, batch_id = nil)
     require "zip"
     extracted = []
 
-    # ensure the uploaded zip is saved to disk first
     zip_info = save_temp_file(uploaded_zip, batch_id)
     zip_path = zip_info["temp_path"]
 
-    # use a dedicated extraction folder for this batch
     extract_root = Rails.root.join("tmp", "uploads", "batch_#{batch_id || 'anon'}", "extracted")
     FileUtils.mkdir_p(extract_root)
 
     Zip::File.open(zip_path) do |zip_file|
       zip_file.each do |entry|
         next if entry.name_is_directory?
-        # dest preserves nested path inside the zip
         dest = File.join(extract_root, entry.name)
         FileUtils.mkdir_p(File.dirname(dest))
         entry.extract(dest) { true } # overwrite if exists
         extracted << {
-          "path" => entry.name,       # relative path inside zip (display/final name)
-          "temp_path" => dest,        # actual extracted file on disk
+          "path" => entry.name,
+          "temp_path" => dest,
           "ext" => File.extname(entry.name),
           "type" => infer_type_by_ext(File.extname(entry.name)),
           "size" => (File.size(dest) rescue nil)
@@ -221,7 +219,7 @@ class FileRecordsController < ApplicationController
     extracted
   end
 
-  # Saves a single uploaded file to tmp/uploads
+  # Save an uploaded file temporarily before processing
   def save_temp_file(uploaded, batch_id = nil)
     temp_dir = Rails.root.join("tmp", "uploads", "batch_#{batch_id || 'anon'}")
     FileUtils.mkdir_p(temp_dir)
@@ -230,7 +228,7 @@ class FileRecordsController < ApplicationController
     File.open(temp_path, "wb") { |f| f.write(uploaded.read) }
 
     {
-      "path" => safe_name,         # canonical relative path for single-file uploads
+      "path" => safe_name,
       "temp_path" => temp_path,
       "ext" => File.extname(safe_name),
       "type" => infer_type_by_ext(File.extname(safe_name)),
@@ -238,10 +236,12 @@ class FileRecordsController < ApplicationController
     }
   end
 
+  # Remove unsafe characters from filenames
   def sanitize_filename(name)
     name.to_s.gsub("\\", "/").gsub(%r{^/}, "").gsub("..", "").strip
   end
 
+  # Strong parameters for single-file uploads
   def file_record_params
     params.require(:file_record).permit(
       :name, :original_name, :file_type, :mime_type,
@@ -249,8 +249,8 @@ class FileRecordsController < ApplicationController
     )
   end
 end
-private
 
+# Infer file type based on extension
 def infer_type_by_ext(ext)
   ext = ext.to_s.downcase
 

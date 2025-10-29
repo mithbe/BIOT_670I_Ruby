@@ -1,5 +1,4 @@
-# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
-
+# Userinfo fixture for testing purposes
 userinfo_one:
   first_name: John
   last_name: Doe

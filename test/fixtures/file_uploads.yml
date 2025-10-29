@@ -1,5 +1,4 @@
-# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
-
+# file_upload fixture for testing purposes
 file_upload_one:
   filename: MyString
   filetype: MyString

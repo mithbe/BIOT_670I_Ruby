@@ -1,21 +1,24 @@
 import { Controller } from "@hotwired/stimulus"
 
+// Handles the Single vs Bulk upload panes and showing/hiding columns in the bulk table
 export default class extends Controller {
+    // These are the elements we care about in the HTML
     static targets = [
         "singlePane", "bulkPane",
         "tabSingleBtn", "tabBulkBtn"
     ]
 
     connect() {
-        // Default to showing Single on first load
+        // When the page loads, show the Single upload pane by default
         if (this.singlePaneTarget && this.bulkPaneTarget) {
             this.showSingle()
         }
 
-        // When bulk table is present, prune columns per row
+        // Go through the bulk table and hide columns that don’t apply to each row
         this.applyTypeColumnVisibility()
     }
 
+    // Show the Single pane and make its tab look active
     showSingle() {
         if (!this.singlePaneTarget || !this.bulkPaneTarget) return
         this.singlePaneTarget.hidden = false
@@ -23,20 +26,24 @@ export default class extends Controller {
         this.highlightTab(this.tabSingleBtnTarget, this.tabBulkBtnTarget)
     }
 
+    // Show the Bulk pane and highlight the right tab
     showBulk() {
         if (!this.singlePaneTarget || !this.bulkPaneTarget) return
         this.singlePaneTarget.hidden = true
         this.bulkPaneTarget.hidden = false
         this.highlightTab(this.tabBulkBtnTarget, this.tabSingleBtnTarget)
+
+        // Make sure only relevant columns are visible for each row
         this.applyTypeColumnVisibility()
     }
 
+    // Simple helper to make the active tab bold and the inactive one normal
     highlightTab(activeBtn, inactiveBtn) {
         if (activeBtn)  activeBtn.style.fontWeight = "bold"
         if (inactiveBtn) inactiveBtn.style.fontWeight = "normal"
     }
 
-    // Hide per-type placeholder columns that don't match the row's file type/ext
+    // Hide columns that don’t match the file type of each row in the bulk table
     applyTypeColumnVisibility() {
         const bulkPane = this.bulkPaneTarget
         if (!bulkPane) return
@@ -46,16 +53,13 @@ export default class extends Controller {
             const fileType = row.getAttribute("data-filetype") || ""
             const ext      = (row.getAttribute("data-extension") || "").toLowerCase()
 
-            // Hide all type columns initially
+            // Hide everything first
             row.querySelectorAll("[data-typecol]").forEach(cell => {
                 cell.hidden = true
             })
 
-            // Decide which one(s) to show
-            // ext is more specific; fallback to type
+            // Figure out which columns to show based on file extension
             const showKeys = []
-
-            // Map ext -> keys
             if (["jpg", "jpeg"].includes(ext)) showKeys.push("jpg")
             if (["png"].includes(ext))         showKeys.push("png")
             if (["csv"].includes(ext))         showKeys.push("csv")
@@ -67,15 +71,15 @@ export default class extends Controller {
             if (["xml"].includes(ext))         showKeys.push("xml")
             if (["pdf"].includes(ext))         showKeys.push("pdf")
 
-            // If nothing specific matched by ext, fall back by broad fileType
+            // If we didn’t match any extension, fall back to the general file type
             if (showKeys.length === 0) {
-                if (fileType === "image")      showKeys.push("jpg", "png")
+                if (fileType === "image")          showKeys.push("jpg", "png")
                 else if (fileType === "spreadsheet") showKeys.push("csv", "tsv", "xlsx")
                 else if (fileType === "genetic")     showKeys.push("fasta", "fastq", "genbank")
-                else                                showKeys.push("other")
+                else                                 showKeys.push("other")
             }
 
-            // Unhide matching cells whose data-typecol contains any of the keys
+            // Unhide all the columns that should be visible
             showKeys.forEach(key => {
                 row.querySelectorAll(`[data-typecol*="${key}"]`).forEach(cell => {
                     cell.hidden = false

@@ -1,3 +1,4 @@
+# Placeholder for metadatum tests
 require "test_helper"
 
 class MetadatumTest < ActiveSupport::TestCase

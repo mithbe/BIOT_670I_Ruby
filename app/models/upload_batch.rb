@@ -1,14 +1,17 @@
 class UploadBatch < ApplicationRecord
+  # Each batch belongs to a user
   belongs_to :user
 
-  has_one_attached :archive    # relies on Active Storage
+  # Optional archive file stored via Active Storage
+  has_one_attached :archive
 
-  # files is a JSON column; store an array of file descriptors
-  # Example element: { "path": "dir/file.png", "size": 1234, "ext": ".png", "type": "image" }
+  # 'files' column stores an array of file info as JSON
+  # Example: { "path": "dir/file.png", "size": 1234, "ext": ".png", "type": "image" }
 
+  # Make sure every batch has a status
   validates :status, presence: true
 
-  # convenience helpers
+  # Convenience methods to check batch state
   def prepared?
     status == "prepared"
   end

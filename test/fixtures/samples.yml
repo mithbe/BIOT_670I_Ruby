@@ -1,5 +1,4 @@
-# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
-
+# Sample fixture for testing purposes
 sample_one:
   name: MyString
   description: MyText

@@ -1,37 +1,28 @@
 #!/usr/bin/env ruby
-
-# A sample pre-connect check
-#
-# Warms DNS before connecting to hosts in parallel
-#
-# These environment variables are available:
-# KAMAL_RECORDED_AT
-# KAMAL_PERFORMER
-# KAMAL_VERSION
-# KAMAL_HOSTS
-# KAMAL_ROLES (if set)
-# KAMAL_DESTINATION (if set)
-# KAMAL_RUNTIME
+# Pre-connect check: warms up DNS for all hosts before connecting in parallel.
 
 require "socket"
 require "benchmark"
 
+# Get the list of hosts from the environment variable
 hosts = (ENV["KAMAL_HOSTS"] || "").split(",").reject(&:empty?)
 results = nil
-max = 3
+max = 3  # Maximum retry attempts per host
 
+# Measure how long DNS warmup takes
 elapsed = Benchmark.realtime do
   results = hosts.map do |host|
     Thread.new do
       tries = 1
 
       begin
+        # Attempt to resolve the host
         Socket.getaddrinfo(host, 0, Socket::AF_UNSPEC, Socket::SOCK_STREAM, nil, Socket::AI_CANONNAME)
       rescue SocketError
         if tries < max
           puts "Retrying DNS warmup: #{host}"
           tries += 1
-          sleep rand
+          sleep rand  # Random short delay before retrying
           retry
         else
           puts "DNS warmup failed: #{host}"
@@ -39,12 +30,13 @@ elapsed = Benchmark.realtime do
         end
       end
 
-      tries
+      tries  # Return number of attempts for this host
     end
   end.map(&:value)
 end
 
+# Summarize results
 retries = results.sum - hosts.size
-nopes = results.count { |r| r == max }
+failures = results.count { |r| r == max }
 
-puts "Prewarmed %d DNS lookups in %.2f sec: %d retries, %d failures" % [ hosts.size, elapsed, retries, nopes ]
+puts "Prewarmed %d DNS lookups in %.2f sec: %d retries, %d failures" % [hosts.size, elapsed, retries, failures]

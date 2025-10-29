@@ -1,22 +1,19 @@
-# This script is used to manually re-index all FileRecords into Typesense.
-# It is useful for bulk-indexing existing records or for development.
+# This re-indexes all FileRecords into Typesense
+# Useful for bulk-indexing or development
 
-# This is crucial for running the script within the full Rails environment.
-# The Typesense client is initialized in an initializer file that gets loaded here.
 require_relative '../config/environment'
+# Load Rails environment to access the database and Typesense client
 
-# We use the client that has been configured in the initializer.
 typesense_client = Rails.application.config.typesense_client
+# Use the pre-configured Typesense client
 
 puts 'Indexing FileRecords into Typesense...'
 
-# Check for the existence of the Typesense collection.
-# If it doesn't exist, we create it.
+# Check if the Typesense collection exists and create it if missing
 begin
   typesense_client.collections['file_records'].retrieve
   puts 'Typesense collection for FileRecords already exists.'
 rescue Typesense::ClientError => e
-  # If the collection is not found, we create it.
   if e.message.include?('Not Found')
     begin
       puts 'Typesense collection not found. Creating a new collection...'
@@ -26,20 +23,19 @@ rescue Typesense::ClientError => e
       puts "Error creating collection: #{e.message}"
     end
   else
-    # For any other Typesense error, we'll re-raise it.
+    # raise any other Typesense errors
     raise e
   end
 end
 
-# Now we iterate through all FileRecords in the database and index each one.
+# Index all FileRecords from the database into Typesense
 FileRecord.find_each do |record|
   begin
-    # The `as_typesense_document` method formats the record for Typesense.
     document = record.as_typesense_document
-    # We use `upsert` to either create a new document or update an existing one.
+    # create or update the record into Typesense
     typesense_client.collections['file_records'].documents.upsert(document)
   rescue StandardError => e
-    # We log any errors to the console so we know which records failed.
+    # Log any records that failed to index
     Rails.logger.error("Failed to index record with ID #{record.id}: #{e.message}")
   end
 end

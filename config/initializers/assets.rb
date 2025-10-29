@@ -1,7 +1,7 @@
-# Be sure to restart your server when you modify this file.
+# restart server when you modify this file
 
-# Version of your assets, change this if you want to expire all your assets.
+# Set the version of your assets
 Rails.application.config.assets.version = "1.0"
 
-# Add additional assets to the asset load path.
+# Add additional paths for asset loading (commented out)
 # Rails.application.config.assets.paths << Emoji.images_path
