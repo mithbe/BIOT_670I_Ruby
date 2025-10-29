@@ -1,0 +1,6 @@
+#!/bin/sh
+# This script runs a simple setup message for Docker deployment.
+# $KAMAL_HOSTS is an environment variable that lists the target servers.
+
+echo "Docker set up on $KAMAL_HOSTS..."
+

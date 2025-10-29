@@ -1,0 +1,42 @@
+#!/usr/bin/env ruby.exe
+# Use Ruby interpreter to run this script (Windows-compatible)
+
+require "fileutils"
+# Provides methods for working with files and directories
+
+APP_ROOT = File.expand_path("..", __dir__)
+# Set the root directory of the application
+
+def system!(*args)
+  # Run a system command and raise an error if it fails
+  system(*args, exception: true)
+end
+
+FileUtils.chdir APP_ROOT do
+  # Change directory to the application root for all commands in this block
+
+  puts "== Installing dependencies =="
+  # Check if gems are installed, otherwise install them
+  system("bundle check") || system!("bundle install")
+
+  # Uncomment for copy sample config files
+  # puts "\n== Copying sample files =="
+  # unless File.exist?("config/database.yml")
+  #   FileUtils.cp "config/database.yml.sample", "config/database.yml"
+  # end
+
+  puts "\n== Preparing database =="
+  # Create or migrate the database
+  system! "bin/rails db:prepare"
+
+  puts "\n== Removing old logs and tempfiles =="
+  # Clear logs and temporary files
+  system! "bin/rails log:clear tmp:clear"
+
+  unless ARGV.include?("--skip-server")
+    puts "\n== Starting development server =="
+    # Flush output and start the Rails development server
+    STDOUT.flush
+    exec "bin/dev"
+  end
+end

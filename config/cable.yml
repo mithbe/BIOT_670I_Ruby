@@ -1,0 +1,20 @@
+# Configuration for Action Cable adapters per environment
+
+development:
+  # Use async adapter for local development (runs in-process)
+  adapter: async
+
+test:
+  # Use test adapter for test environment
+  adapter: test
+
+production:
+  # Use SolidCable adapter for production
+  adapter: solid_cable
+  connects_to:
+    database:
+      writing: cable
+  # How often to poll for updates
+  polling_interval: 0.1.seconds
+  # How long messages are kept
+  message_retention: 1.day

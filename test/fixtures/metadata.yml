@@ -1,0 +1,11 @@
+# metadata fixture for testing purposes
+metadata_one:
+  key: MyString
+  value: MyString
+  file_upload_id: <%= ActiveRecord::FixtureSet.identify(:file_upload_one) %>
+
+metadata_two:
+  key: MyString
+  value: MyString
+  file_upload_id: <%= ActiveRecord::FixtureSet.identify(:file_upload_two) %>
+

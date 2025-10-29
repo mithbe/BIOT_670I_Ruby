@@ -1,0 +1,22 @@
+<div class="dashboard-buttons">
+  <h1>All Files</h1>
+
+  <div class="search-form-container">
+    <%= form_with url: file_records_path, method: :get, data: { turbo: false } do |form| %>
+      <%= form.text_field :search, placeholder: "Search...", class: "search-input" %>
+      <%= form.submit "Search", class: "btn search-btn" %>
+    <% end %>
+  </div>
+
+  <%= link_to "Upload New File", new_file_record_path, class: "btn" %>
+
+  <ul class="file-list">
+    <% @file_records.each do |file| %>
+      <li>
+        <%= link_to file.name, file_record_path(file), class: "btn" %>
+        <%= link_to "Edit", edit_file_record_path(file), class: "btn" %>
+        <%= link_to "Delete", file_record_path(file), method: :delete, data: { confirm: "Are you sure?" }, class: "btn" %>
+      </li>
+    <% end %>
+  </ul>
+</div>

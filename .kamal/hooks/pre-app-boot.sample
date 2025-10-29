@@ -1,0 +1,7 @@
+#!/bin/sh
+# This script runs when the app is starting up during deployment.
+# $KAMAL_VERSION - the version or build tag being booted.
+# $KAMAL_HOSTS   - the list of servers where the app is being started.
+
+echo "Booting app version $KAMAL_VERSION on $KAMAL_HOSTS..."
+

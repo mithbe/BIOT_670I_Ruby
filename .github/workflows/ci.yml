@@ -1,0 +1,135 @@
+# Continuous Integration (CI) workflow for our Rails app.
+# This runs automatically on every push to `main` and on all pull requests.
+# It handles security scans, linting, and running the test suite.
+
+name: CI
+
+on:
+  pull_request:      # Run the workflow when someone opens or updates a PR.
+  push:
+    branches: [ main ]  # Also run on direct pushes to the main branch.
+
+jobs:
+  # Security Scan for Ruby
+  scan_ruby:
+    runs-on: ubuntu-latest  # Use the latest Ubuntu image for the job.
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4  # Pull the repository files into the runner.
+
+      - name: Set up Ruby
+        uses: ruby/setup-ruby@v1   # Installs Ruby based on the .ruby-version file.
+        with:
+          ruby-version: .ruby-version
+          bundler-cache: true      # Cache gems to speed up future runs.
+
+      - name: Make brakeman executable
+        run: chmod +x bin/brakeman  # Ensure brakeman script can run.
+
+      - name: Scan for common Rails security vulnerabilities using static analysis
+        run: bin/brakeman --no-pager  # Run Brakeman to catch security issues.
+
+  # Security Scan for JavaScript
+  scan_js:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: .ruby-version
+          bundler-cache: true
+
+      - name: Make bin/importmap executable
+        run: chmod +x bin/importmap  # Make sure importmap script is runnable.
+
+      - name: Scan for security vulnerabilities in JavaScript dependencies
+        run: bin/importmap audit  # Check JS dependencies for known issues.
+
+  # Linting (Code Style Check)
+  lint:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: .ruby-version
+          bundler-cache: true
+
+      - name: Make rubocop executable
+        run: chmod +x bin/rubocop  # Make sure rubocop can run.
+
+      - name: Lint code for consistent style
+        run: bin/rubocop -f github  # Run rubocop and format output for GitHub.
+
+  # Testing
+  test:
+    runs-on: ubuntu-latest
+
+    services:
+      postgres:
+        image: postgres  # Run a PostgreSQL database in a service container.
+        env:
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: postgres
+        ports:
+          - 5432:5432
+        options: >
+          --health-cmd="pg_isready"
+          --health-interval=10s
+          --health-timeout=5s
+          --health-retries=3  # Wait for Postgres to be healthy before continuing.
+
+      # Redis setup (currently commented out)
+      # redis:
+      #   image: redis
+      #   ports:
+      #     - 6379:6379
+      #   options: >
+      #     --health-cmd "redis-cli ping"
+      #     --health-interval 10s
+      #     --health-timeout 5s
+      #     --health-retries 5
+
+    steps:
+      - name: Install packages
+        run: |
+          sudo apt-get update && \
+          sudo apt-get install --no-install-recommends -y \
+          build-essential git libpq-dev libyaml-dev pkg-config google-chrome-stable
+        # Installs system dependencies needed for building gems and running browser tests.
+
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: .ruby-version
+          bundler-cache: true
+
+      - name: Make Rails bin executable
+        run: chmod +x bin/rails
+
+      - name: Run tests
+        env:
+          RAILS_ENV: test
+          DATABASE_URL: postgres://postgres:postgres@localhost:5432
+          # REDIS_URL: redis://localhost:6379/0  # Uncomment if Redis is used in tests.
+        run: bin/rails db:test:prepare test test:system  # Set up DB and run all tests.
+
+      - name: Keep screenshots from failed system tests
+        uses: actions/upload-artifact@v4
+        if: failure()  # Only upload if tests fail.
+        with:
+          name: screenshots
+          path: ${{ github.workspace }}/tmp/screenshots
+          if-no-files-found: ignore  # Skip gracefully if no screenshots exist.

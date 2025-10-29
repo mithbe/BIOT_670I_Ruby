@@ -1,0 +1,6 @@
+#!/bin/sh
+# This script runs after the Kamal proxy service is rebooted.
+# $KAMAL_HOSTS contains the list of servers where the proxy was rebooted.
+
+echo "Rebooted kamal-proxy on $KAMAL_HOSTS"
+

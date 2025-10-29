@@ -1,0 +1,12 @@
+# Dandelion_user fixture for testing purposes
+dandelion_one:
+  species: MyString
+  location: MyString
+  collected_at: 2025-09-14 08:49:50
+  user_id: <%= ActiveRecord::FixtureSet.identify(:one_user) %>
+
+dandelion_two:
+  species: MyString
+  location: MyString
+  collected_at: 2025-09-14 08:49:50
+  user_id: <%= ActiveRecord::FixtureSet.identify(:two_user) %>

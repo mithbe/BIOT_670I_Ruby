@@ -1,0 +1,11 @@
+#!/usr/bin/env ruby
+# Use Ruby interpreter to run this script
+
+require_relative "../config/environment"
+# Load the Rails environment and application settings
+
+require "solid_queue/cli"
+# Load the SolidQueue command-line interface
+
+SolidQueue::Cli.start(ARGV)
+# Start the SolidQueue CLI, passing in any command-line arguments

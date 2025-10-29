@@ -1,0 +1,11 @@
+#!/usr/bin/env ruby.exe
+# Use Ruby interpreter to run this script (Windows-compatible)
+
+require_relative "../config/boot"
+# Load the Rails boot file to set up the environment and gems
+
+require "rake"
+# Load Rake
+
+Rake.application.run
+# Run the Rake application

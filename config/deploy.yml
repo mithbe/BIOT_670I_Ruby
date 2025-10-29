@@ -1,0 +1,87 @@
+# Kamal deployment configuration for Dandelion Warehouse Rails app
+
+service: dandelion_warehouse         # Name of the app/service
+image: your-user/dandelion_warehouse # Docker image
+
+servers:
+  web:
+    - 192.168.0.1
+  # job:
+  #   hosts:
+  #     - 192.168.0.1
+  #   cmd: bin/jobs
+
+# SSL and proxy settings
+proxy:
+  ssl: true
+  host: app.example.com
+
+# Image registry credentials
+registry:
+  username: your-user
+  password:
+    - KAMAL_REGISTRY_PASSWORD  # Use access token, not password
+
+# Environment variables (secret and clear)
+env:
+  secret:
+    - RAILS_MASTER_KEY
+  clear:
+    SOLID_QUEUE_IN_PUMA: true
+    # commented out:
+    # JOB_CONCURRENCY: 3
+    # WEB_CONCURRENCY: 2
+    # DB_HOST: 192.168.0.2
+    # RAILS_LOG_LEVEL: debug
+
+# Aliases for quick commands
+aliases:
+  console: app exec --interactive --reuse "bin/rails console"
+  shell:   app exec --interactive --reuse "bash"
+  logs:    app logs -f
+  dbc:     app exec --interactive --reuse "bin/rails dbconsole"
+
+# Persistent storage
+volumes:
+  - "dandelion_warehouse_storage:/rails/storage"
+
+# Asset handling
+asset_path: /rails/public/assets
+
+# Image builder
+builder:
+  arch: amd64
+  # commented out remote build:
+  # remote: ssh://docker@docker-builder-server
+  # args:
+  #   RUBY_VERSION: ruby-3.3.9
+  # secrets:
+  #   - GITHUB_TOKEN
+  #   - RAILS_MASTER_KEY
+
+# commented out SSH user
+# ssh:
+#   user: app
+
+# commented out services
+# accessories:
+#   db:
+#     image: mysql:8.0
+#     host: 192.168.0.2
+#     port: "127.0.0.1:3306:3306"
+#     env:
+#       clear:
+#         MYSQL_ROOT_HOST: '%'
+#       secret:
+#         - MYSQL_ROOT_PASSWORD
+#     files:
+#       - config/mysql/production.cnf:/etc/mysql/my.cnf
+#       - db/production.sql:/docker-entrypoint-initdb.d/setup.sql
+#     directories:
+#       - data:/var/lib/mysql
+#   redis:
+#     image: redis:7.0
+#     host: 192.168.0.2
+#     port: 6379
+#     directories:
+#       - data:/data

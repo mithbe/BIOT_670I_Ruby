@@ -1,0 +1,11 @@
+#!/usr/bin/env ruby.exe
+# Use Ruby interpreter to run this script (Windows-compatible)
+
+require "rubygems"
+# Load RubyGems to manage installed gems
+
+require "bundler/setup"
+# Set up gems listed in the Gemfile
+
+# Run the 'thrust' executable from the 'thruster' gem
+load Gem.bin_path("thruster", "thrust")

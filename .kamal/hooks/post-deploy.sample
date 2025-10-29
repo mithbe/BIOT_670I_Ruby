@@ -1,0 +1,4 @@
+#!/bin/sh
+# Post-deploy hook: logs a summary after a deployment finishes.
+
+echo "$KAMAL_PERFORMER deployed $KAMAL_VERSION to $KAMAL_DESTINATION in $KAMAL_RUNTIME seconds"

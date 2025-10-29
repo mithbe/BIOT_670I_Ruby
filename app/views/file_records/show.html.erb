@@ -1,0 +1,9 @@
+<div class="dashboard-buttons">
+  <h1><%= @file_record.name %></h1>
+  <p><strong>Description:</strong> <%= @file_record.description %></p>
+  <p><strong>Type:</strong> <%= @file_record.file_type %></p>
+  <p><strong>Size:</strong> <%= @file_record.size %></p>
+
+  <%= link_to "Edit", edit_file_record_path(@file_record), class: "btn" %>
+  <%= link_to "Back to Files", file_records_path, class: "btn" %>
+</div>

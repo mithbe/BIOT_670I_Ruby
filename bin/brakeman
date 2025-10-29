@@ -1,0 +1,15 @@
+#!/usr/bin/env ruby
+# This shebang runs the script using the Ruby interpreter.
+
+require "rubygems"
+# Load RubyGems to manage and use installed gems.
+
+require "bundler/setup"
+# Set up gem paths according to the Gemfile.
+
+ARGV.unshift("--ensure-latest")
+# Add "--ensure-latest" to command-line arguments to always use the latest checks.
+
+load Gem.bin_path("brakeman", "brakeman")
+# Find and execute the Brakeman binary.
+

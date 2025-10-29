@@ -1,0 +1,13 @@
+# Users fixture for testing purposes
+one_user:
+  email: one@example.com
+  encrypted_password: <%= Devise::Encryptor.digest(User, 'password') %>
+
+two_user:
+  email: two@example.com
+  encrypted_password: <%= Devise::Encryptor.digest(User, 'password') %>
+
+
+
+
+

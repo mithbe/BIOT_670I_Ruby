@@ -1,0 +1,11 @@
+#!/usr/bin/env ruby
+# Use Ruby interpreter to run this script
+
+# Set the path to the Rails application configuration
+APP_PATH = File.expand_path("../config/application", __dir__)
+
+require_relative "../config/boot"
+# Load the Rails boot file, which sets up the environment and gems
+
+require "rails/commands"
+# Load Rails command-line commands

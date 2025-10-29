@@ -1,0 +1,34 @@
+<!-- Rubra Account Edit Page -->
+
+<div class="dashboard-buttons">
+  <h2>Edit Account</h2>
+
+  <% if flash[:notice] %>
+    <div class="notice"><%= flash[:notice] %></div>
+  <% end %>
+
+  <% if flash[:alert] %>
+    <div class="alert"><%= flash[:alert] %></div>
+  <% end %>
+
+  <%= form_for(current_user, url: account_path, method: :patch) do |f| %>
+    <div class="field">
+      <p><strong>Email:</strong> <%= f.object.email %></p>
+      <%= f.hidden_field :email, value: f.object.email %>
+    </div>
+
+    <div class="field">
+      <%= f.label :password, "New Password" %>
+      <%= f.password_field :password, autocomplete: "new-password" %>
+    </div>
+
+    <div class="field">
+      <%= f.label :password_confirmation, "Confirm New Password" %>
+      <%= f.password_field :password_confirmation, autocomplete: "new-password" %>
+    </div>
+
+    <div class="actions">
+      <%= f.submit "Update Account", class: "btn" %>
+    </div>
+  <% end %>
+</div>

@@ -1,0 +1,18 @@
+<!-- Rubra Account Details Page -->
+
+<div class="dashboard-buttons">
+  <h2>Account Details</h2>
+
+  <% if flash[:notice] %>
+    <div class="notice"><%= flash[:notice] %></div>
+  <% end %>
+
+  <% if flash[:alert] %>
+    <div class="alert"><%= flash[:alert] %></div>
+  <% end %>
+
+  <p><strong>Email:</strong> <%= current_user.email %></p>
+  <p><strong>Created At:</strong> <%= current_user.created_at.strftime("%B %d, %Y") %></p>
+
+  <%= link_to "Edit Account", edit_account_path, class: "btn" %>
+</div>

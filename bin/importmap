@@ -1,0 +1,8 @@
+#!/usr/bin/env ruby
+# Use Ruby interpreter to run this script
+
+require_relative "../config/application"
+# Load the Rails application configuration
+
+require "importmap/commands"
+# Load Importmap commands for managing JavaScript dependencies

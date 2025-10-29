@@ -1,0 +1,11 @@
+# Storage configuration for different environments
+
+# Temporary storage used for tests
+test:
+  service: Disk
+  root: <%= Rails.root.join("tmp/storage") %>
+
+# Local storage used during development
+local:
+  service: Disk
+  root: <%= Rails.root.join("storage") %>

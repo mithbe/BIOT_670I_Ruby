@@ -1,0 +1,5 @@
+# This file defines translations for your Rails application (i18n).
+# Rails automatically loads files in config/locales/*.yml.
+
+en:
+  hello: "Hello world"

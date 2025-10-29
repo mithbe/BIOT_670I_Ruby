@@ -1,0 +1,13 @@
+# file_upload fixture for testing purposes
+file_upload_one:
+  filename: MyString
+  filetype: MyString
+  user_id: <%= ActiveRecord::FixtureSet.identify(:one_user) %>
+  dandelion_id: <%= ActiveRecord::FixtureSet.identify(:dandelion_one) %>
+
+file_upload_two:
+  filename: MyString
+  filetype: MyString
+  user_id: <%= ActiveRecord::FixtureSet.identify(:two_user) %>
+  dandelion_id: <%= ActiveRecord::FixtureSet.identify(:dandelion_two) %>
+

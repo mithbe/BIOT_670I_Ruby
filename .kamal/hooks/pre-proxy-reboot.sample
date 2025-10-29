@@ -1,0 +1,5 @@
+#!/bin/sh
+# logs that the Kamal proxy service is being restarted on the target hosts.
+
+echo "Rebooting kamal-proxy on $KAMAL_HOSTS..."
+
