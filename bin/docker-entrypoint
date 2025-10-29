@@ -11,4 +11,5 @@ if [ "${@: -2:1}" == "./bin/rails" ] && [ "${@: -1:1}" == "server" ]; then
   ./bin/rails db:prepare
 fi
 
+# Execute the original command with all passed arguments
 exec "${@}"

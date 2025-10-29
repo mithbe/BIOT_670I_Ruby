@@ -1,3 +1,4 @@
+# Placeholder for Userinfos tests
 require "test_helper"
 
 class UserinfoTest < ActiveSupport::TestCase

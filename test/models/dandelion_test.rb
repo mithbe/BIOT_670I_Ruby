@@ -1,3 +1,4 @@
+# Placeholder for Dandelion tests
 require "test_helper"
 
 class DandelionTest < ActiveSupport::TestCase

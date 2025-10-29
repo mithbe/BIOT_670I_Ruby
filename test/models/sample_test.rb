@@ -1,3 +1,4 @@
+# Placeholder for Sample tests
 require "test_helper"
 
 class SampleTest < ActiveSupport::TestCase

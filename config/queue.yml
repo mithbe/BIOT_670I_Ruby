@@ -1,13 +1,19 @@
+# Solid Queue configuration for job processing
+
 default: &default
+  # Dispatcher settings
   dispatchers:
     - polling_interval: 1
       batch_size: 500
-  workers:
-    - queues: "*"
-      threads: 3
-      processes: <%= ENV.fetch("JOB_CONCURRENCY", 1) %>
-      polling_interval: 0.1
 
+  # Worker settings
+  workers:
+    - queues: "*"              # Listen to all queues
+      threads: 3               # Threads per worker
+      processes: <%= ENV.fetch("JOB_CONCURRENCY", 1) %>
+      polling_interval: 0.1    # How often workers check for jobs
+
+# Environment-specific configs
 development:
   <<: *default
 

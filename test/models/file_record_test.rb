@@ -1,3 +1,4 @@
+# Placeholder for FileRecord tests
 require "test_helper"
 
 class FileRecordTest < ActiveSupport::TestCase

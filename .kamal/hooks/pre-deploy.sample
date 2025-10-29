@@ -1,43 +1,32 @@
 #!/usr/bin/env ruby
+# Pre-deploy hook: checks GitHub build status before deploying to production.
+# Waits for any pending CI builds to complete (up to 720 seconds) and fails
+# if the combined status is not "success".
 
-# A sample pre-deploy hook
-#
-# Checks the Github status of the build, waiting for a pending build to complete for up to 720 seconds.
-#
-# Fails unless the combined status is "success"
-#
-# These environment variables are available:
-# KAMAL_RECORDED_AT
-# KAMAL_PERFORMER
-# KAMAL_VERSION
-# KAMAL_HOSTS
-# KAMAL_COMMAND
-# KAMAL_SUBCOMMAND
-# KAMAL_ROLES (if set)
-# KAMAL_DESTINATION (if set)
-
-# Only check the build status for production deployments
+# Skip checks for rollbacks or non-production deployments
 if ENV["KAMAL_COMMAND"] == "rollback" || ENV["KAMAL_DESTINATION"] != "production"
   exit 0
 end
 
 require "bundler/inline"
 
-# true = install gems so this is fast on repeat invocations
+# Quickly install required gems if missing
 gemfile(true, quiet: true) do
   source "https://rubygems.org"
   gem "octokit"
   gem "faraday-retry"
 end
 
-MAX_ATTEMPTS = 72
-ATTEMPTS_GAP = 10
+MAX_ATTEMPTS = 72       # Number of polling attempts
+ATTEMPTS_GAP = 10       # Seconds between attempts
 
+# Helper to print an error and exit
 def exit_with_error(message)
   $stderr.puts message
   exit 1
 end
 
+# Class to check GitHub status for the current commit
 class GithubStatusChecks
   attr_reader :remote_url, :git_sha, :github_client, :combined_status
 
@@ -48,27 +37,33 @@ class GithubStatusChecks
     refresh!
   end
 
+  # Refresh the latest status from GitHub
   def refresh!
     @combined_status = github_client.combined_status(remote_url, git_sha)
   end
 
+  # Returns "success", "failure", or "pending"
   def state
     combined_status[:state]
   end
 
+  # URL of the first status check matching the overall state
   def first_status_url
     first_status = combined_status[:statuses].find { |status| status[:state] == state }
     first_status && first_status[:target_url]
   end
 
+  # Number of checks that are complete
   def complete_count
     combined_status[:statuses].count { |status| status[:state] != "pending" }
   end
 
+  # Total number of checks
   def total_count
     combined_status[:statuses].count
   end
 
+  # Human-readable current status
   def current_status
     if total_count > 0
       "Completed #{complete_count}/#{total_count} checks, see #{first_status_url} ..."
@@ -79,6 +74,7 @@ class GithubStatusChecks
 
   private
 
+  # Extract repo path from git remote URL
   def github_repo_from_remote_url
     url = `git config --get remote.origin.url`.strip.delete_suffix(".git")
     if url.start_with?("https://github.com/")
@@ -91,11 +87,11 @@ class GithubStatusChecks
   end
 end
 
-$stdout.sync = true
+$stdout.sync = true  # Ensure output appears immediately
 
+# --- Main loop ---
 begin
   puts "Checking build status..."
-
   attempts = 0
   checks = GithubStatusChecks.new
 

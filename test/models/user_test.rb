@@ -1,3 +1,4 @@
+# Placeholder for User tests
 require "test_helper"
 
 class UserTest < ActiveSupport::TestCase
